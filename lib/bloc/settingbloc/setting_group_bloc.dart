@@ -21,36 +21,12 @@ class SettingGroupBloc extends Bloc<SettingGroupEvent, SettingGroupState> {
             List<responseSetting>? respset = await listdata(event.reqset);
             emit(SettingSuccess(respset));
           }
-        } catch (e) {}
+        } catch (e) {
+          emit(SettingError(e.toString()));
+        }
       },
     );
   }
-
-//   @override
-//   Stream<SettingGroupState> mapEventToState(SettingGroupState event) async* {
-//     if(event is GetAll) {
-//       yield* _getAllUsers();
-//     }
-//   }
-
-//  Stream<SettingGroupState> _getAllUsers() async* {
-//   try {
-//     yield Loading();
-//     List<requestSetting> reqset = await userRepository.fetchUsers();
-//     yield SettingLoaded(reqset);
-//   } catch (e) {
-//     print(e);
-//     yield ShowMessage(e.toString());
-//   }
-//  }
-
-  // Future<String?> Search(requestSetting reqset) async {
-  //   var response = await api.search(
-  //     body: model.toMap,
-  //   ) as Map<String, dynamic>;
-  //   requestSetting reqset = requestSetting.map(response);
-  //   return null;
-  // }
 
   Future<List<responseSetting>> listdata(requestSetting reqset) async {
     List<responseSetting> listModel = [];

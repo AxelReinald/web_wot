@@ -16,10 +16,10 @@ class requestSetting {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['groupCd'] = this.groupCd;
-    data['groupName'] = this.groupName;
-    data['pageNumber'] = this.pageNumber;
-    data['pageSize'] = this.pageSize;
+    data['groupCd'] = groupCd == null ? '' : groupCd.toString();
+    data['groupName'] = groupName == null ? '' : groupName.toString();
+    data['pageNumber'] = 0;
+    data['pageSize'] = 10;
     return data;
   }
 }

@@ -63,9 +63,14 @@ abstract class SettingGroupState {}
 
 class SettingLoading extends SettingGroupState {}
 
+class SettingError extends SettingGroupState {
+  final String error;
+  SettingError(this.error);
+}
+
 class SettingInitial extends SettingGroupState {}
 
 class SettingSuccess extends SettingGroupState {
-  final List<responseSetting>? respset;
+  final List<responseSetting> respset;
   SettingSuccess(this.respset);
 }
