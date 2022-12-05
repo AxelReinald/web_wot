@@ -29,6 +29,8 @@ class _MyWidgetState extends State<MyWidget>
     });
   }
 
+  List<responseSetting> arraysetting = [];
+
   static const _birulangit = 0xFFF7FAFC;
 
   final ScrollController _scrollgrid = ScrollController();
@@ -55,6 +57,23 @@ class _MyWidgetState extends State<MyWidget>
     return BlocListener<SettingGroupBloc, SettingGroupState>(
       listener: (context, state) {
         // TODO: implement listener
+        if (state is SettingError) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+                duration: const Duration(seconds: 5),
+                content: Text(
+                  state.error,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                backgroundColor: Colors.red));
+        }
+        if (state is SettingSuccess) {
+          arraysetting.clear();
+          arraysetting.addAll(state.respset);
+        }
       },
       child: Scaffold(
         body: Row(
@@ -634,107 +653,120 @@ class _MyWidgetState extends State<MyWidget>
                                           const SizedBox(
                                             height: 10,
                                           ),
-                                          Container(
-                                            height: 50,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            child: ListView.builder(
-                                              itemCount: 10,
-                                              itemBuilder: (context, index) =>
-                                                  Column(children: [
-                                                Row(
-                                                  children: [
-                                                    Container(
-                                                      height: 50,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.03,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Container(
-                                                      height: 50,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.10,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Container(
-                                                      height: 50,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.10,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Container(
-                                                      height: 50,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.10,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Container(
-                                                      height: 50,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.10,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Container(
-                                                      height: 50,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.10,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Container(
-                                                      height: 50,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.10,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Container(
-                                                      height: 50,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.10,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ]),
-                                            ),
-                                          ),
+                                          arraysetting.length > 0 ||
+                                                  arraysetting.isNotEmpty
+                                              ? Container(
+                                                  height: 50,
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  child: ListView.builder(
+                                                    itemCount: 10,
+                                                    itemBuilder:
+                                                        (context, index) =>
+                                                            Column(children: [
+                                                      Row(
+                                                        children: [
+                                                          Container(
+                                                            height: 50,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.03,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Container(
+                                                            height: 50,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.10,
+                                                            child: Text(arraysetting[
+                                                                    index]
+                                                                .settingGroupCode
+                                                                .toString()),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Container(
+                                                            height: 50,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.10,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Container(
+                                                            height: 50,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.10,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Container(
+                                                            height: 50,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.10,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Container(
+                                                            height: 50,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.10,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Container(
+                                                            height: 50,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.10,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Container(
+                                                            height: 50,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.10,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ]),
+                                                  ),
+                                                )
+                                              : Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  child: Text('No Data Found'),
+                                                )
                                         ],
                                       ),
                                     ),
