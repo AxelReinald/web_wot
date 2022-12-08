@@ -16,6 +16,12 @@ class MyWidget extends StatefulWidget {
 
 class _MyWidgetState extends State<MyWidget>
     with SingleTickerProviderStateMixin {
+  List<ResponseSetting> arraysetting = [];
+  int? total;
+  int? hal;
+  int page = 1;
+  List<RData> halo = [];
+
   RequestSetting reqset = new RequestSetting();
   AddRequestSettings addset = new AddRequestSettings();
   //late final requestSetting reqset;
@@ -23,10 +29,10 @@ class _MyWidgetState extends State<MyWidget>
   double _size = 250.0;
 //  bool isCheckedHeader = false;
   bool isChecked = false;
-  // late Map<String, bool> ListCheck = {
-  //   for (int i = 0; i < halo.length; i++)
-  //     halo[i].settingGroupCode! + ";" + halo[i].settingGroupName!: false
-  // };
+  late Map<String, bool> ListCheck = {
+    for (int i = 0; i < halo.length; i++)
+      halo[i].settingGroupCode! + ";" + halo[i].settingGroupName! + ";" + halo[i].settingGroupDesc! : false
+  };
 
   @override
   void initState() {
@@ -55,11 +61,7 @@ class _MyWidgetState extends State<MyWidget>
 
   var splited;
 
-  List<ResponseSetting> arraysetting = [];
-  int? total;
-  int? hal;
-  int page = 1;
-  List<RData> halo = [];
+
 
   static const _birulangit = 0xFFF7FAFC;
 
@@ -78,6 +80,9 @@ class _MyWidgetState extends State<MyWidget>
 
   @override
   Widget build(BuildContext context) {
+
+
+
     if (page < 1) {
       page = 1;
     } else if (page > 4) {
@@ -497,16 +502,7 @@ class _MyWidgetState extends State<MyWidget>
                                         width: 120,
                                         child: OutlinedButton(
                                           onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => EditDialog(
-                                                      // settingGroupCode:
-                                                      //     halo[index].settingGroupCode,
-                                                      // settingGroupName:
-                                                      //     settingGroupName
-                                                      ),
-                                                ));
+                                            EditSetting();
                                           },
                                           child: Row(
                                             mainAxisAlignment:
@@ -832,23 +828,30 @@ class _MyWidgetState extends State<MyWidget>
                                                               fillColor: MaterialStateProperty
                                                                   .resolveWith(
                                                                       getColor),
-                                                              value: halo[index]
-                                                                  .isChecked,
-                                                              //  ListCheck[halo[
-                                                              //             index]
-                                                              //         .settingGroupCode! +
-                                                              //     ";" +
-                                                              //     halo[index]
-                                                              //         .settingGroupName!],
+                                                              value:
+                                                                ListCheck[halo[
+                                                                           index]
+                                                                       .settingGroupCode! +
+                                                                   ";" +
+                                                                   halo[index]
+                                                                       .settingGroupName! +
+                                                                    ";" +
+                                                                    halo[index]
+                                                                        .settingGroupDesc!
+                                                              ],
                                                               onChanged: (bool?
                                                                   value) {
                                                                 setState(() {
-                                                                  // ListCheck[halo[
-                                                                  //             index]
-                                                                  //         .settingGroupCode! +
-                                                                  //     ";" +
-                                                                  //     halo[index]
-                                                                  //         .settingGroupName!] = value!;
+                                                                   ListCheck[halo[
+                                                                               index]
+                                                                           .settingGroupCode! +
+                                                                       ";" +
+                                                                       halo[index]
+                                                                           .settingGroupName! +
+                                                                       ";" +
+                                                                       halo[index]
+                                                                           .settingGroupDesc!
+                                                                  ] = value!;
                                                                 });
                                                               },
                                                               side: const BorderSide(
@@ -1207,34 +1210,22 @@ class _MyWidgetState extends State<MyWidget>
     );
   }
 
-  // void EditSetting() {
-  //   var holder_1 = [];
-  //   ListCheck.forEach((key, value) {
-  //     if (value == true) {
-  //       holder_1.add(key);
-  //     }
-  //   });
-  //   if (holder_1.length == 1) {
-  //     splited = holder_1[0].toString().split(';');
-  //     String settingGroupCode = splited[0];
-  //     String settingGroupName = splited[1];
-  //     showDialog<String>(
-  //         context: context,
-  //         builder: (ctx) {
-  //           return EditDialog(
-  //               settingGroupCode: settingGroupCode,
-  //               settingGroupName: settingGroupName);
-  //         }).then((value) => {
-  //           if (value != null)
-  //             {
-  //               splited = value.split(','),
-  //               reqset.groupCd = splited[0],
-  //               reqset.groupName = splited[1],
-  //               bloc.add(Edit(addset))
-  //             }
-  //         });
-  //   }
-  // }
+   void EditSetting() {
+     var holder_1 = [];
+     ListCheck.forEach((key, value) {
+       if (value == true) {
+         holder_1.add(key);
+       }
+     });
+     if (holder_1.length == 1) {
+       splited = holder_1[0].toString().split(';');
+       String settingGroupCode = splited[0];
+       String settingGroupName = splited[1];
+       String settingGroupDesc = splited[2];
+       EditDialog1(settingGroupCode, settingGroupName, settingGroupDesc);
+     }
+
+   }
 
   Future AddDialog() => showDialog(
         //fungsi add dialog
@@ -1399,161 +1390,165 @@ class _MyWidgetState extends State<MyWidget>
           ),
         ),
       );
-  // Future EditDialog() => showDialog(
-  //       //fungsi edit dialog
-  //       context: context,
-  //       builder: (context) => AlertDialog(
-  //         backgroundColor: Colors.white,
-  //         title: Row(
-  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //           children: [
-  //             Text(
-  //               'Setting Group - Edit',
-  //               style:
-  //                   TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-  //             ),
-  //             Spacer(),
-  //             IconButton(
-  //                 onPressed: () => Navigator.pop(context, true),
-  //                 icon: Icon(
-  //                   Icons.close,
-  //                   color: Colors.black,
-  //                   size: 25,
-  //                 ))
-  //           ],
-  //         ),
-  //         content: Container(
-  //           height: 400,
-  //           width: 400,
-  //           child: Column(
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             mainAxisAlignment: MainAxisAlignment.center,
-  //             children: [
-  //               const Text(
-  //                 'Setting Group Code',
-  //                 style: TextStyle(color: Colors.black),
-  //               ),
-  //               const SizedBox(
-  //                 height: 8,
-  //               ),
-  //               Card(
-  //                 shape: RoundedRectangleBorder(
-  //                   borderRadius: BorderRadius.circular(20),
-  //                 ),
-  //                 child: Container(
-  //                   decoration: BoxDecoration(
-  //                       borderRadius: BorderRadius.circular(10),
-  //                       color: Colors.grey.shade300),
-  //                   // color: Colors.blue.shade100,
-  //                   child: TextFormField(
-  //                     readOnly: true,
-  //                     // maxLength: 20,
-  //                     style: const TextStyle(color: Colors.black),
 
-  //                   ),
-  //                 ),
-  //               ),
-  //               const SizedBox(
-  //                 height: 10,
-  //               ),
-  //               Text(
-  //                 'Setting Group Name',
-  //                 style: TextStyle(color: Colors.black),
-  //               ),
-  //               const SizedBox(
-  //                 height: 8,
-  //               ),
-  //               TextFormField(
-  //                 controller: _EditGroupName,
-  //                 maxLength: 20,
-  //                 style: const TextStyle(color: Colors.black),
-  //                 decoration: InputDecoration(
-  //                   fillColor: Colors.white,
-  //                   focusedBorder: OutlineInputBorder(
-  //                     borderRadius: BorderRadius.circular(10.0),
-  //                     borderSide: const BorderSide(
-  //                       color: Colors.blue,
-  //                     ),
-  //                   ),
-  //                   enabledBorder: OutlineInputBorder(
-  //                     borderRadius: BorderRadius.circular(10.0),
-  //                     borderSide:
-  //                         BorderSide(width: 1.0, color: Colors.grey.shade400),
-  //                   ),
-  //                 ),
-  //               ),
-  //               const SizedBox(
-  //                 height: 10,
-  //               ),
-  //               Text(
-  //                 'Description',
-  //                 style: TextStyle(color: Colors.black),
-  //               ),
-  //               const SizedBox(
-  //                 height: 8,
-  //               ),
-  //               TextFormField(
-  //                 controller: _EditDescription,
-  //                 maxLines: 5, // <-- SEE HERE
-  //                 minLines: 1,
-  //                 maxLength: 150,
-  //                 // maxLength: 150,
-  //                 style: const TextStyle(color: Colors.black),
-  //                 decoration: InputDecoration(
-  //                   contentPadding: EdgeInsets.symmetric(vertical: 10),
-  //                   fillColor: Colors.white,
-  //                   focusedBorder: OutlineInputBorder(
-  //                     borderRadius: BorderRadius.circular(10.0),
-  //                     borderSide: const BorderSide(
-  //                       color: Colors.blue,
-  //                     ),
-  //                   ),
-  //                   enabledBorder: OutlineInputBorder(
-  //                     borderRadius: BorderRadius.circular(10.0),
-  //                     borderSide:
-  //                         BorderSide(width: 1.0, color: Colors.grey.shade400),
-  //                   ),
-  //                 ),
-  //               ),
-  //               Spacer(),
-  //               Row(
-  //                 mainAxisAlignment: MainAxisAlignment.end,
-  //                 children: [
-  //                   OutlinedButton(
-  //                     onPressed: () => Navigator.pop(context, true),
-  //                     child: Text(
-  //                       'Cancel',
-  //                       style: TextStyle(color: Colors.blue),
-  //                     ),
-  //                     style: OutlinedButton.styleFrom(
-  //                       primary: Colors.white,
-  //                       side: BorderSide(
-  //                           color: Colors.blue, width: 1), //<-- SEE HERE
-  //                     ),
-  //                   ),
-  //                   SizedBox(
-  //                     width: 10,
-  //                   ),
-  //                   TextButton(
-  //                     onPressed: () {
-  //                       addset.groupDesc = _EditGroupName.text;
-  //                       addset.groupName = _EditDescription.text;
-  //                       bloc.add(Edit(addset));
-  //                     },
-  //                     child: Text(
-  //                       'Save',
-  //                       style: TextStyle(color: Colors.white),
-  //                     ),
-  //                     style: ButtonStyle(
-  //                       backgroundColor: MaterialStateProperty.all(Colors.blue),
-  //                     ),
-  //                   ),
-  //                 ],
-  //               )
-  //             ],
-  //           ),
-  //         ),
-  //       ),
-  //     );
+  Future EditDialog1(String settingCd, String settingName, String settingdesc) => showDialog(
+    //fungsi edit dialog
+    context: context,
+    builder: (context) => AlertDialog(
+      backgroundColor: Colors.white,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Setting Group - Edit',
+            style:
+            TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+          ),
+          Spacer(),
+          IconButton(
+              onPressed: () => Navigator.pop(context, true),
+              icon: Icon(
+                Icons.close,
+                color: Colors.black,
+                size: 25,
+              ))
+        ],
+      ),
+      content: Container(
+        height: 400,
+        width: 400,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Setting Group Code',
+              style: TextStyle(color: Colors.black),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey.shade300),
+                // color: Colors.blue.shade100,
+                child: TextFormField(
+                  initialValue: settingCd,
+                  readOnly: true,
+                  // maxLength: 20,
+                  style: const TextStyle(color: Colors.black),
+
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Setting Group Name',
+              style: TextStyle(color: Colors.black),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            TextFormField(
+              //controller: _EditGroupName,
+              initialValue: settingName,
+              maxLength: 20,
+              style: const TextStyle(color: Colors.black),
+              decoration: InputDecoration(
+                fillColor: Colors.white,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: const BorderSide(
+                    color: Colors.blue,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide:
+                  BorderSide(width: 1.0, color: Colors.grey.shade400),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Description',
+              style: TextStyle(color: Colors.black),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            TextFormField(
+              initialValue: settingdesc,
+              //controller: _EditDescription,
+              maxLines: 5, // <-- SEE HERE
+              minLines: 1,
+              maxLength: 150,
+              // maxLength: 150,
+              style: const TextStyle(color: Colors.black),
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(vertical: 10),
+                fillColor: Colors.white,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: const BorderSide(
+                    color: Colors.blue,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide:
+                  BorderSide(width: 1.0, color: Colors.grey.shade400),
+                ),
+              ),
+            ),
+            Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                OutlinedButton(
+                  onPressed: () => Navigator.pop(context, true),
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    primary: Colors.white,
+                    side: BorderSide(
+                        color: Colors.blue, width: 1), //<-- SEE HERE
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                TextButton(
+                  onPressed: () {
+                    //addset.groupDesc = _EditGroupName.text;
+                    //addset.groupName = _EditDescription.text;
+                    bloc.add(Edit(addset));
+                  },
+                  child: Text(
+                    'Save',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.blue),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    ),
+  );
 
 }
