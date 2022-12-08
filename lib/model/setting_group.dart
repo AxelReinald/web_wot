@@ -1,13 +1,13 @@
-class requestSetting {
+class RequestSetting {
   String? groupCd;
   String? groupName;
   int? pageNumber;
   int? pageSize;
 
-  requestSetting(
+  RequestSetting(
       {this.groupCd, this.groupName, this.pageNumber, this.pageSize});
 
-  requestSetting.fromJson(Map<String, dynamic> json) {
+  RequestSetting.fromJson(Map<String, dynamic> json) {
     groupCd = json['groupCd'];
     groupName = json['groupName'];
     pageNumber = json['pageNumber'];
@@ -18,22 +18,77 @@ class requestSetting {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['groupCd'] = groupCd == null ? '' : groupCd.toString();
     data['groupName'] = groupName == null ? '' : groupName.toString();
-    data['pageNumber'] = 0;
-    data['pageSize'] = 10;
+    data['pageNumber'] = this.pageNumber;
+    data['pageSize'] = this.pageSize;
     return data;
   }
 }
 
-class responseSetting {
+class AddRequestSettings {
+  String? groupCd;
+  String? groupDesc;
+  String? groupName;
+
+  AddRequestSettings({this.groupCd, this.groupDesc, this.groupName});
+
+  AddRequestSettings.fromJson(Map<String, dynamic> json) {
+    groupCd = json['groupCd'];
+    groupDesc = json['groupDesc'];
+    groupName = json['groupName'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['groupCd'] = this.groupCd;
+    data['groupDesc'] = this.groupDesc;
+    data['groupName'] = this.groupName;
+    return data;
+  }
+}
+
+class ResponseSetting {
+  String? status;
+  String? message;
+  int? countData;
+  List<RData>? data;
+
+  ResponseSetting({this.status, this.message, this.countData, this.data});
+
+  ResponseSetting.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    countData = json['countData'];
+    if (json['data'] != null) {
+      data = <RData>[];
+      json['data'].forEach((v) {
+        data!.add(new RData.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
+    data['countData'] = this.countData;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class RData {
+  bool? isChecked;
   String? createdBy;
   String? createdTime;
-  Null? updatedBy;
+  String? updatedBy;
   String? updatedTime;
   String? settingGroupCode;
   String? settingGroupName;
   String? settingGroupDesc;
 
-  responseSetting(
+  RData(
       {this.createdBy,
       this.createdTime,
       this.updatedBy,
@@ -42,7 +97,7 @@ class responseSetting {
       this.settingGroupName,
       this.settingGroupDesc});
 
-  responseSetting.fromJson(Map<String, dynamic> json) {
+  RData.fromJson(Map<String, dynamic> json) {
     createdBy = json['createdBy'];
     createdTime = json['createdTime'];
     updatedBy = json['updatedBy'];
