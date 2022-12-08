@@ -1,7 +1,4 @@
-//import 'dart:html';
-
 import 'package:bloc/bloc.dart';
-//import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:web_wot/model/setting_group.dart';
 import 'package:web_wot/service/restapi.dart';
@@ -10,16 +7,29 @@ part 'setting_group_event.dart';
 part 'setting_group_state.dart';
 
 class SettingGroupBloc extends Bloc<SettingGroupEvent, SettingGroupState> {
-  //final UserRepostitory userRepository;
   RestApi api = RestApi();
+  RequestSetting modreq = RequestSetting();
+  ResponseSetting resp = ResponseSetting();
+  AddRequestSettings addreq = AddRequestSettings();
+
   SettingGroupBloc() : super(SettingInitial()) {
     on<SettingGroupEvent>(
       (event, emit) async {
         try {
           emit(SettingLoading());
-          if (event is Search) {
-            List<responseSetting>? respset = await listdata(event.reqset);
-            emit(SettingSuccess(respset));
+          if (event is InitialScreen) {
+            //   modreq = event.reqset;
+            resp = await response(event.reqset);
+            emit(InitSetSuccess(resp));
+          } else if (event is Search) {
+            resp = await response(event.reqset);
+            emit(SettingSuccess(resp));
+          } else if (event is Add) {
+            addreq = await addresponse(event.addset);
+            emit(AddSettingSuccess(addreq));
+          } else if (event is Edit) {
+            addreq = await editresponse(event.addset);
+            emit(EditSettingSuccess(addreq));
           }
         } catch (e) {
           emit(SettingError(e.toString()));
@@ -28,8 +38,8 @@ class SettingGroupBloc extends Bloc<SettingGroupEvent, SettingGroupState> {
     );
   }
 
-  Future<List<responseSetting>> listdata(requestSetting reqset) async {
-    List<responseSetting> listModel = [];
+  Future<List<ResponseSetting>> listdata(RequestSetting reqset) async {
+    List<ResponseSetting> listModel = [];
     dynamic response =
         await api.ListSetting(body: reqset.toJson()) as Map<String, dynamic>;
     var res = response["data"];
@@ -39,8 +49,32 @@ class SettingGroupBloc extends Bloc<SettingGroupEvent, SettingGroupState> {
     }
     List listData = res;
     for (var item in listData) {
-      listModel.add(responseSetting.fromJson(item));
+      listModel.add(ResponseSetting.fromJson(item));
     }
     return listModel;
+  }
+
+  response(RequestSetting req) async {
+    ResponseSetting respee = ResponseSetting();
+
+    respee = await api.searchData(req.toJson());
+
+    return respee;
+  }
+
+  addresponse(AddRequestSettings req) async {
+    AddRequestSettings respee = AddRequestSettings();
+
+    respee = await api.AddSettingGroupData(req.toJson());
+
+    return respee;
+  }
+
+  editresponse(AddRequestSettings req) async {
+    AddRequestSettings resultrep = AddRequestSettings();
+
+    resultrep = await api.EditSettingGroupData(req.toJson());
+
+    return resultrep;
   }
 }

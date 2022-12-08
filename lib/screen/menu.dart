@@ -78,7 +78,9 @@ class _LeftDrawerState extends State<LeftDrawer> with TickerProviderStateMixin {
                                       fontWeight: FontWeight.w500),
                                 ),
                                 Icon(
-                                  menuClicked ? Icons.add : Icons.remove,
+                                  menuClicked
+                                      ? Icons.keyboard_arrow_down
+                                      : Icons.keyboard_arrow_up,
                                   color: Colors.black,
                                 )
                               ],
@@ -110,7 +112,8 @@ class _LeftDrawerState extends State<LeftDrawer> with TickerProviderStateMixin {
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Row(
                           children: [
-                            const Icon(Icons.arrow_right, color: Colors.black),
+                            const Icon(Icons.keyboard_arrow_right,
+                                color: Colors.black),
                             const SizedBox(width: 10),
                             const Text(
                               'Menu',
@@ -129,7 +132,7 @@ class _LeftDrawerState extends State<LeftDrawer> with TickerProviderStateMixin {
                         child: Row(
                           children: [
                             const Icon(
-                              Icons.arrow_right,
+                              Icons.keyboard_arrow_right,
                               color: Colors.black,
                             ),
                             const SizedBox(width: 10),
@@ -149,7 +152,8 @@ class _LeftDrawerState extends State<LeftDrawer> with TickerProviderStateMixin {
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Row(
                           children: [
-                            const Icon(Icons.arrow_right, color: Colors.black),
+                            const Icon(Icons.keyboard_arrow_right,
+                                color: Colors.black),
                             const SizedBox(width: 10),
                             const Text(
                               'User',
@@ -194,7 +198,9 @@ class _LeftDrawerState extends State<LeftDrawer> with TickerProviderStateMixin {
                                       fontWeight: FontWeight.w500),
                                 ),
                                 Icon(
-                                  menuClicked2 ? Icons.add : Icons.remove,
+                                  menuClicked2
+                                      ? Icons.keyboard_arrow_down
+                                      : Icons.keyboard_arrow_up,
                                   color: Colors.black,
                                 )
                               ],
@@ -219,23 +225,55 @@ class _LeftDrawerState extends State<LeftDrawer> with TickerProviderStateMixin {
                         ]),
                       ),
                     ),
-                    Container(
-                      height: _height2,
-                      width: _width2,
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.arrow_right, color: Colors.black),
-                            const SizedBox(width: 10),
-                            const Text(
-                              'Setting Group',
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          ],
+                    InkWell(
+                      child: Ink(
+                        height: _height2,
+                        width: _width2,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.keyboard_arrow_right,
+                                  color: Colors.black),
+                              SizedBox(width: 10),
+                              Text(
+                                'Setting Group',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/settinggroup');
+                      },
+                    ),
+                    InkWell(
+                      child: Ink(
+                        height: _height2,
+                        width: _width2,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Colors.black,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'Setting',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/setting');
+                      },
                     ),
                     Container(
                       height: _height2,
@@ -244,33 +282,13 @@ class _LeftDrawerState extends State<LeftDrawer> with TickerProviderStateMixin {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Row(
-                          children: [
-                            const Icon(
-                              Icons.arrow_right,
-                              color: Colors.black,
-                            ),
-                            const SizedBox(width: 10),
-                            const Text(
-                              'Setting',
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: _height2,
-                      width: _width2,
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.arrow_right, color: Colors.black),
-                            const SizedBox(width: 10),
-                            const Text(
+                          children: const [
+                            Icon(Icons.keyboard_arrow_right,
+                                color: Colors.black),
+                            SizedBox(width: 10),
+                            Text(
                               'Parameter',
-                              style: const TextStyle(color: Colors.black),
+                              style: TextStyle(color: Colors.black),
                             ),
                           ],
                         ),
@@ -310,7 +328,9 @@ class _LeftDrawerState extends State<LeftDrawer> with TickerProviderStateMixin {
                                       fontWeight: FontWeight.w500),
                                 ),
                                 Icon(
-                                  menuClicked3 ? Icons.add : Icons.remove,
+                                  menuClicked3
+                                      ? Icons.keyboard_arrow_down
+                                      : Icons.keyboard_arrow_up,
                                   color: Colors.black,
                                 )
                               ],
@@ -343,12 +363,13 @@ class _LeftDrawerState extends State<LeftDrawer> with TickerProviderStateMixin {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Row(
-                          children: [
-                            const Icon(Icons.arrow_right, color: Colors.black),
-                            const SizedBox(width: 10),
-                            const Text(
+                          children: const [
+                            Icon(Icons.keyboard_arrow_right,
+                                color: Colors.black),
+                            SizedBox(width: 10),
+                            Text(
                               'Request',
-                              style: const TextStyle(color: Colors.black),
+                              style: TextStyle(color: Colors.black),
                             ),
                           ],
                         ),
@@ -361,15 +382,15 @@ class _LeftDrawerState extends State<LeftDrawer> with TickerProviderStateMixin {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Row(
-                          children: [
-                            const Icon(
-                              Icons.arrow_right,
+                          children: const [
+                            Icon(
+                              Icons.keyboard_arrow_right,
                               color: Colors.black,
                             ),
-                            const SizedBox(width: 10),
-                            const Text(
+                            SizedBox(width: 10),
+                            Text(
                               'Verification',
-                              style: const TextStyle(color: Colors.black),
+                              style: TextStyle(color: Colors.black),
                             ),
                           ],
                         ),
@@ -382,10 +403,11 @@ class _LeftDrawerState extends State<LeftDrawer> with TickerProviderStateMixin {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Row(
-                          children: [
-                            const Icon(Icons.arrow_right, color: Colors.black),
-                            const SizedBox(width: 10),
-                            const Text(
+                          children: const [
+                            Icon(Icons.keyboard_arrow_right,
+                                color: Colors.black),
+                            SizedBox(width: 10),
+                            Text(
                               'Process',
                               style: TextStyle(color: Colors.black),
                             ),

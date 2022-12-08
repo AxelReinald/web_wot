@@ -3,21 +3,22 @@ part of 'setting_group_bloc.dart';
 @immutable
 abstract class SettingGroupEvent {}
 
-// class ReqUser extends SettingGroupEvent {
-//   final requestSetting model;
-//   final responseSetting models;
-//   ReqUser(this.model, this.models);
-// }
-
-// class GetAll implements SettingGroupEvent {
-//   @override
-//   List<Object> get props => [];
-
-//   @override
-//   bool get stringify => false;
-// }
-
 class Search extends SettingGroupEvent {
-  final requestSetting reqset;
+  final RequestSetting reqset;
   Search(this.reqset);
+}
+
+class Add extends SettingGroupEvent {
+  final AddRequestSettings addset;
+  Add(this.addset);
+}
+
+class Edit extends SettingGroupEvent {
+  final AddRequestSettings addset;
+  Edit(this.addset);
+}
+
+class InitialScreen extends SettingGroupEvent {
+  final RequestSetting reqset;
+  InitialScreen(this.reqset);
 }
