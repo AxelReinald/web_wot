@@ -75,4 +75,19 @@ class RestApi extends UrlApi {
       },
     );
   }
+
+  Future<DeleteRequestSettings> DeleteSettingGroupData(
+      Map<String, dynamic> body) {
+    return util
+        .post(
+      BaseUrl + "deleteSettingGroup",
+      body: body,
+    )
+        .then(
+      (dynamic res) {
+        if (res["errMsg"] != null) throw (res["errMsg"].toString());
+        return DeleteRequestSettings.fromJson(res);
+      },
+    );
+  }
 }

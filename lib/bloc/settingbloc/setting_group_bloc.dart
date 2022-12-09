@@ -11,6 +11,7 @@ class SettingGroupBloc extends Bloc<SettingGroupEvent, SettingGroupState> {
   RequestSetting modreq = RequestSetting();
   ResponseSetting resp = ResponseSetting();
   AddRequestSettings addreq = AddRequestSettings();
+  DeleteRequestSettings delreq = DeleteRequestSettings();
 
   SettingGroupBloc() : super(SettingInitial()) {
     on<SettingGroupEvent>(
@@ -30,6 +31,9 @@ class SettingGroupBloc extends Bloc<SettingGroupEvent, SettingGroupState> {
           } else if (event is Edit) {
             addreq = await editresponse(event.addset);
             emit(EditSettingSuccess(addreq));
+          } else if (event is Delete) {
+            delreq = await deleteresponse(event.delset);
+            emit(DeleteSettingSuccess(delreq));
           }
         } catch (e) {
           emit(SettingError(e.toString()));
@@ -76,5 +80,13 @@ class SettingGroupBloc extends Bloc<SettingGroupEvent, SettingGroupState> {
     resultrep = await api.EditSettingGroupData(req.toJson());
 
     return resultrep;
+  }
+
+  deleteresponse(DeleteRequestSettings req) async {
+    DeleteRequestSettings resultdel = DeleteRequestSettings();
+
+    resultdel = await api.DeleteSettingGroupData(req.toJson());
+
+    return resultdel;
   }
 }

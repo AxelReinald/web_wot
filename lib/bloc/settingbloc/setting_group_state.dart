@@ -27,6 +27,11 @@ class EditSettingSuccess extends SettingGroupState {
   EditSettingSuccess(this.resp);
 }
 
+class DeleteSettingSuccess extends SettingGroupState {
+  final DeleteRequestSettings resp;
+  DeleteSettingSuccess(this.resp);
+}
+
 class InitSetSuccess extends SettingGroupState {
   final ResponseSetting resp;
   InitSetSuccess(this.resp);

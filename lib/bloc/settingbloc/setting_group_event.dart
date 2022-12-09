@@ -18,6 +18,11 @@ class Edit extends SettingGroupEvent {
   Edit(this.addset);
 }
 
+class Delete extends SettingGroupEvent {
+  final DeleteRequestSettings delset;
+  Delete(this.delset);
+}
+
 class InitialScreen extends SettingGroupEvent {
   final RequestSetting reqset;
   InitialScreen(this.reqset);

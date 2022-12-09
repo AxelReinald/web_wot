@@ -98,6 +98,7 @@ class RData {
       this.settingGroupDesc});
 
   RData.fromJson(Map<String, dynamic> json) {
+    isChecked = false;
     createdBy = json['createdBy'];
     createdTime = json['createdTime'];
     updatedBy = json['updatedBy'];
@@ -116,6 +117,45 @@ class RData {
     data['settingGroupCode'] = this.settingGroupCode;
     data['settingGroupName'] = this.settingGroupName;
     data['settingGroupDesc'] = this.settingGroupDesc;
+    return data;
+  }
+}
+
+class DeleteRequestSettings {
+  List<ListCode>? listCode;
+
+  DeleteRequestSettings({this.listCode});
+
+  DeleteRequestSettings.fromJson(Map<String, dynamic> json) {
+    if (json['listCode'] != null) {
+      listCode = <ListCode>[];
+      json['listCode'].forEach((v) {
+        listCode!.add(new ListCode.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.listCode != null) {
+      data['listCode'] = this.listCode!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class ListCode {
+  String? code;
+
+  ListCode({this.code});
+
+  ListCode.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['code'] = this.code;
     return data;
   }
 }
