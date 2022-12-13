@@ -159,3 +159,77 @@ class ListCode {
     return data;
   }
 }
+
+class DeleteResponseSetting {
+  String? status;
+  String? message;
+  int? countData;
+  Data? data;
+
+  DeleteResponseSetting({this.status, this.message, this.countData, this.data});
+
+  DeleteResponseSetting.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    countData = json['countData'];
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
+    data['countData'] = this.countData;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
+class Data {
+  Null? status;
+  String? message;
+  Null? countData;
+  List<String>? data;
+
+  Data({this.status, this.message, this.countData, this.data});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    countData = json['countData'];
+    data = json['data'].cast<String>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
+    data['countData'] = this.countData;
+    data['data'] = this.data;
+    return data;
+  }
+}
+
+class DownloadRequestSettings {
+  String? groupCd;
+  String? groupName;
+  String? extension;
+
+  DownloadRequestSettings({this.groupCd, this.groupName, this.extension});
+
+  DownloadRequestSettings.fromJson(Map<String, dynamic> json) {
+    groupCd = json['groupCd'];
+    groupName = json['groupName'];
+    extension = json['extension'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['groupCd'] = this.groupCd;
+    data['groupName'] = this.groupName;
+    data['extension'] = this.extension;
+    return data;
+  }
+}

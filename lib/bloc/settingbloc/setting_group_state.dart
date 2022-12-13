@@ -28,8 +28,14 @@ class EditSettingSuccess extends SettingGroupState {
 }
 
 class DeleteSettingSuccess extends SettingGroupState {
+  // String resp;
   final DeleteRequestSettings resp;
   DeleteSettingSuccess(this.resp);
+}
+
+class DownloadSuccess extends SettingGroupState {
+  final DownloadRequestSettings resp;
+  DownloadSuccess(this.resp);
 }
 
 class InitSetSuccess extends SettingGroupState {

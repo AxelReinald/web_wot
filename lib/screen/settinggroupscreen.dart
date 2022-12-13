@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web_wot/bloc/settingbloc/setting_group_bloc.dart';
-import 'package:web_wot/common/dialogbox.dart';
-// import 'package:web_wot/common/dialogbox.dart';
 import 'package:web_wot/helper/custom_scroll.dart';
 import 'package:web_wot/model/setting_group.dart';
 import 'package:web_wot/screen/menu.dart';
@@ -21,11 +19,13 @@ class _MyWidgetState extends State<MyWidget>
   int? hal;
   int page = 1;
   List<RData> halo = [];
+  List<ListCode> del = [];
 
   RequestSetting reqset = new RequestSetting();
   AddRequestSettings addset = new AddRequestSettings();
   DeleteRequestSettings delset = new DeleteRequestSettings();
   ListCode code = new ListCode();
+  DownloadRequestSettings dowreq = new DownloadRequestSettings();
   //late final requestSetting reqset;
   late SettingGroupBloc bloc;
   double _size = 250.0;
@@ -38,10 +38,8 @@ class _MyWidgetState extends State<MyWidget>
     reqset.pageNumber = 0;
     reqset.groupCd = '';
     reqset.groupName = '';
-    //bloc.add(InitialScreen(reqset));
     halo.clear();
     bloc.add(Search(reqset));
-    // isCheckedBody = List<bool>.filled(halo.length, false);
     super.initState();
   }
 
@@ -175,7 +173,7 @@ class _MyWidgetState extends State<MyWidget>
                       color: Colors.white,
                     ),
                   ),
-                  backgroundColor: Colors.red),
+                  backgroundColor: Colors.green),
             );
           bloc.add(Search(reqset));
         }
@@ -206,7 +204,7 @@ class _MyWidgetState extends State<MyWidget>
                             _updateSize();
                           },
                         ),
-                        Text(
+                        const Text(
                           'Setting Group',
                           style: TextStyle(color: Colors.black87),
                         ),
@@ -235,8 +233,8 @@ class _MyWidgetState extends State<MyWidget>
                                   width: 50.0,
                                   height: 50.0,
                                   child: InkWell(
-                                    onTap: () {},
-                                  ),
+                                      // onTap: () {},
+                                      ),
                                 ),
                               ),
                               const SizedBox(
@@ -244,17 +242,17 @@ class _MyWidgetState extends State<MyWidget>
                               ),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
+                                children: const [
+                                  Text(
                                     'Axel Reinald',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  const SizedBox(
+                                  SizedBox(
                                     height: 5,
                                   ),
-                                  const Text('Admin',
+                                  Text('Admin',
                                       style: TextStyle(color: Colors.black))
                                 ],
                               )
@@ -322,6 +320,9 @@ class _MyWidgetState extends State<MyWidget>
                                         child: TextFormField(
                                           controller: _Settinggroupcd,
                                           decoration: InputDecoration(
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 8, horizontal: 8),
                                             // labelText: "Enter Email",
                                             fillColor: Colors.white,
                                             focusedBorder: OutlineInputBorder(
@@ -373,6 +374,9 @@ class _MyWidgetState extends State<MyWidget>
                                         child: TextFormField(
                                           controller: _Settinggroupname,
                                           decoration: InputDecoration(
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 8, horizontal: 8),
                                             // labelText: "Enter Email",
                                             fillColor: Colors.white,
                                             focusedBorder: OutlineInputBorder(
@@ -553,7 +557,10 @@ class _MyWidgetState extends State<MyWidget>
                                         height: 40,
                                         width: 120,
                                         child: OutlinedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.of(context).pushNamed(
+                                                '/settinggroup/import');
+                                          },
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -570,26 +577,25 @@ class _MyWidgetState extends State<MyWidget>
                                       const SizedBox(
                                         width: 15,
                                       ),
-                                      SizedBox(
-                                        height: 40,
-                                        width: 120,
-                                        child: TextButton(
-                                          onPressed: () {},
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              const Text(
+                                      InkWell(
+                                        onTap: () {
+                                          dowreq.groupName;
+                                          dowreq.groupCd;
+                                          print('masuk download');
+                                          bloc.add(Download(dowreq));
+                                        },
+                                        child: Card(
+                                          child: Container(
+                                            color: Colors.blue,
+                                            height: 40,
+                                            width: 120,
+                                            child: Center(
+                                              child: Text(
                                                 'Download',
                                                 style: TextStyle(
                                                     color: Colors.white),
                                               ),
-                                            ],
-                                          ),
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.blue),
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -598,468 +604,458 @@ class _MyWidgetState extends State<MyWidget>
                                   const SizedBox(
                                     height: 15,
                                   ),
-                                  ScrollConfiguration(
-                                    behavior: MyCustomScrollBehavior(),
-                                    child: SingleChildScrollView(
-                                      controller: _horizontalscroll,
-                                      scrollDirection: Axis.horizontal,
-                                      child: Column(
-                                        children: [
+                                  SingleChildScrollView(
+                                    controller: _horizontalscroll,
+                                    scrollDirection: Axis.horizontal,
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          //table header
+                                          height: 50,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          color: Color(_birulangit),
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                height: 50,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.03,
+                                                child: Checkbox(
+                                                  checkColor: Colors.black,
+                                                  fillColor:
+                                                      MaterialStateProperty
+                                                          .resolveWith(
+                                                              getColor),
+                                                  value: isChecked,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      isChecked = !isChecked;
+                                                    });
+                                                  },
+                                                  side: const BorderSide(
+                                                      color: Colors.grey),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.10,
+                                                height: 50,
+                                                child: const Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 15),
+                                                  child: Text(
+                                                    'Setting Group Code',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.10,
+                                                height: 50,
+                                                child: const Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 15),
+                                                  child: Text(
+                                                    'Setting Group Name',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.10,
+                                                height: 50,
+                                                child: const Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 15),
+                                                  child: Text(
+                                                    'Description',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.10,
+                                                height: 50,
+                                                child: const Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 15),
+                                                  child: Text(
+                                                    'Created By',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.10,
+                                                height: 50,
+                                                child: const Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 15),
+                                                  child: Text(
+                                                    'Created Date',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.10,
+                                                height: 50,
+                                                child: const Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 15),
+                                                  child: Text(
+                                                    'Change By',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.10,
+                                                height: 50,
+                                                child: const Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 15),
+                                                  child: Text(
+                                                    'Change Date',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        if (halo.length > 0 || halo.isNotEmpty)
+                                          BlocBuilder<SettingGroupBloc,
+                                              SettingGroupState>(
+                                            builder: (context, state) {
+                                              return Container(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.4,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                child: ListView.builder(
+                                                  controller: TableScroll,
+                                                  itemCount: halo.length,
+                                                  itemBuilder:
+                                                      (context, index) =>
+                                                          Column(children: [
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          height: 50,
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.03,
+                                                          child: Checkbox(
+                                                            checkColor:
+                                                                Colors.black,
+                                                            fillColor:
+                                                                MaterialStateProperty
+                                                                    .resolveWith(
+                                                                        getColor),
+                                                            value: halo[index]
+                                                                .isChecked,
+                                                            onChanged:
+                                                                (bool? value) {
+                                                              setState(() {
+                                                                halo[index]
+                                                                        .isChecked =
+                                                                    value!;
+                                                              });
+                                                            },
+                                                            side:
+                                                                const BorderSide(
+                                                                    color: Colors
+                                                                        .grey),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Container(
+                                                          height: 50,
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.10,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    vertical:
+                                                                        15),
+                                                            child: Text(
+                                                              halo[index]
+                                                                  .settingGroupCode
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Container(
+                                                          height: 50,
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.10,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    vertical:
+                                                                        15),
+                                                            child: Text(
+                                                              halo[index]
+                                                                  .settingGroupName
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Container(
+                                                          height: 50,
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.10,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    vertical:
+                                                                        15),
+                                                            child: Text(
+                                                              halo[index]
+                                                                  .settingGroupDesc
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Container(
+                                                          height: 50,
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.10,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    vertical:
+                                                                        15),
+                                                            child: Text(
+                                                              halo[index]
+                                                                  .createdBy
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Container(
+                                                          height: 50,
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.10,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    vertical:
+                                                                        15),
+                                                            child: Text(
+                                                              halo[index]
+                                                                  .createdTime
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Container(
+                                                          height: 50,
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.10,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    vertical:
+                                                                        15),
+                                                            child: Text(
+                                                              halo[index]
+                                                                  .updatedBy
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Container(
+                                                          height: 50,
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.10,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    vertical:
+                                                                        15),
+                                                            child: Text(
+                                                              halo[index]
+                                                                  .updatedTime
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Divider(
+                                                      height: 0.2,
+                                                      thickness: 0.8,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ]),
+                                                ),
+                                              );
+                                            },
+                                          )
+                                        else
                                           Container(
-                                            //table header
-                                            height: 50,
+                                            height: 20,
+                                            // color: Colors.grey,
                                             width: MediaQuery.of(context)
                                                 .size
                                                 .width,
-                                            color: Color(_birulangit),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  height: 50,
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.03,
-                                                  child: Checkbox(
-                                                    checkColor: Colors.black,
-                                                    fillColor:
-                                                        MaterialStateProperty
-                                                            .resolveWith(
-                                                                getColor),
-                                                    value: isChecked,
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        isChecked = !isChecked;
-                                                      });
-                                                    },
-                                                    side: const BorderSide(
-                                                        color: Colors.grey),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.10,
-                                                  height: 50,
-                                                  child: const Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 15),
-                                                    child: Text(
-                                                      'Setting Group Code',
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.10,
-                                                  height: 50,
-                                                  child: const Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 15),
-                                                    child: Text(
-                                                      'Setting Group Name',
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.10,
-                                                  height: 50,
-                                                  child: const Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 15),
-                                                    child: Text(
-                                                      'Description',
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.10,
-                                                  height: 50,
-                                                  child: const Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 15),
-                                                    child: Text(
-                                                      'Created By',
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.10,
-                                                  height: 50,
-                                                  child: const Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 15),
-                                                    child: Text(
-                                                      'Created Date',
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.10,
-                                                  height: 50,
-                                                  child: const Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 15),
-                                                    child: Text(
-                                                      'Change By',
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.10,
-                                                  height: 50,
-                                                  child: const Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 15),
-                                                    child: Text(
-                                                      'Change Date',
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
+                                            child: Column(
+                                              children: const [
+                                                Center(
+                                                  child: Text(
+                                                    'No Data Found',
+                                                    style: TextStyle(
+                                                        color: Colors.black),
                                                   ),
                                                 ),
                                               ],
                                             ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          if (halo.length > 0 ||
-                                              halo.isNotEmpty)
-                                            BlocBuilder<SettingGroupBloc,
-                                                SettingGroupState>(
-                                              builder: (context, state) {
-                                                return Container(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.4,
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  child: ListView.builder(
-                                                    controller: TableScroll,
-                                                    itemCount: halo.length,
-                                                    itemBuilder:
-                                                        (context, index) =>
-                                                            Column(children: [
-                                                      Row(
-                                                        children: [
-                                                          Container(
-                                                            height: 50,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.03,
-                                                            child: Checkbox(
-                                                              checkColor:
-                                                                  Colors.black,
-                                                              fillColor: MaterialStateProperty
-                                                                  .resolveWith(
-                                                                      getColor),
-                                                              value: halo[index]
-                                                                  .isChecked,
-                                                              onChanged: (bool?
-                                                                  value) {
-                                                                setState(() {
-                                                                  halo[index]
-                                                                          .isChecked =
-                                                                      value!;
-                                                                });
-                                                              },
-                                                              side: const BorderSide(
-                                                                  color: Colors
-                                                                      .grey),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Container(
-                                                            height: 50,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.10,
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .symmetric(
-                                                                      vertical:
-                                                                          15),
-                                                              child: Text(
-                                                                halo[index]
-                                                                    .settingGroupCode
-                                                                    .toString(),
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Container(
-                                                            height: 50,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.10,
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .symmetric(
-                                                                      vertical:
-                                                                          15),
-                                                              child: Text(
-                                                                halo[index]
-                                                                    .settingGroupName
-                                                                    .toString(),
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Container(
-                                                            height: 50,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.10,
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .symmetric(
-                                                                      vertical:
-                                                                          15),
-                                                              child: Text(
-                                                                halo[index]
-                                                                    .settingGroupDesc
-                                                                    .toString(),
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Container(
-                                                            height: 50,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.10,
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .symmetric(
-                                                                      vertical:
-                                                                          15),
-                                                              child: Text(
-                                                                halo[index]
-                                                                    .createdBy
-                                                                    .toString(),
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Container(
-                                                            height: 50,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.10,
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .symmetric(
-                                                                      vertical:
-                                                                          15),
-                                                              child: Text(
-                                                                halo[index]
-                                                                    .createdTime
-                                                                    .toString(),
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Container(
-                                                            height: 50,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.10,
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .symmetric(
-                                                                      vertical:
-                                                                          15),
-                                                              child: Text(
-                                                                halo[index]
-                                                                    .updatedBy
-                                                                    .toString(),
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Container(
-                                                            height: 50,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.10,
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .symmetric(
-                                                                      vertical:
-                                                                          15),
-                                                              child: Text(
-                                                                halo[index]
-                                                                    .updatedTime
-                                                                    .toString(),
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Divider(
-                                                        height: 0.2,
-                                                        thickness: 0.8,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ]),
-                                                  ),
-                                                );
-                                              },
-                                            )
-                                          else
-                                            Container(
-                                              height: 20,
-                                              // color: Colors.grey,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              child: Column(
-                                                children: const [
-                                                  Center(
-                                                    child: Text(
-                                                      'No Data Found',
-                                                      style: TextStyle(
-                                                          color: Colors.black),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                        ],
-                                      ),
+                                          )
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -1219,21 +1215,23 @@ class _MyWidgetState extends State<MyWidget>
       }
     }
     if (holder_1.length == 1) {
+      print(holder_1.length);
       splited = holder_1[0].toString().split(';');
       String settingGroupCode = splited[0];
       String settingGroupName = splited[1];
       String settingGroupDesc = splited[2];
       EditDialog1(settingGroupCode, settingGroupName, settingGroupDesc);
     } else {
+      print(holder_1.length);
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
         ..showSnackBar(
           const SnackBar(
               duration: Duration(seconds: 5),
               content: Text(
-                'Data tidak lebih dari satu',
+                'Pilih Satu Data!',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
               backgroundColor: Colors.red),
@@ -1246,22 +1244,30 @@ class _MyWidgetState extends State<MyWidget>
         context: context,
         builder: (context) => AlertDialog(
           backgroundColor: Colors.white,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          title: Column(
             children: [
-              Text(
-                'Setting Group - Add',
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Setting Group - Add',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black),
+                  ),
+                  Spacer(),
+                  IconButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.black,
+                        size: 25,
+                      ))
+                ],
               ),
-              Spacer(),
-              IconButton(
-                  onPressed: () => Navigator.pop(context, true),
-                  icon: Icon(
-                    Icons.close,
-                    color: Colors.black,
-                    size: 25,
-                  ))
+              Divider(
+                thickness: 2,
+                color: Colors.blue,
+              )
             ],
           ),
           content: Container(
@@ -1415,15 +1421,15 @@ class _MyWidgetState extends State<MyWidget>
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Setting Group - Edit',
                 style:
                     TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
               ),
-              Spacer(),
+              const Spacer(),
               IconButton(
                   onPressed: () => Navigator.pop(context, true),
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.close,
                     color: Colors.black,
                     size: 25,
@@ -1458,7 +1464,7 @@ class _MyWidgetState extends State<MyWidget>
                       readOnly: true,
                       // maxLength: 20,
                       style: const TextStyle(color: Colors.black),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       ),
@@ -1468,7 +1474,7 @@ class _MyWidgetState extends State<MyWidget>
                 const SizedBox(
                   height: 10,
                 ),
-                Text(
+                const Text(
                   'Setting Group Name',
                   style: TextStyle(color: Colors.black),
                 ),
@@ -1501,7 +1507,7 @@ class _MyWidgetState extends State<MyWidget>
                 const SizedBox(
                   height: 10,
                 ),
-                Text(
+                const Text(
                   'Description',
                   style: TextStyle(color: Colors.black),
                 ),
@@ -1536,7 +1542,7 @@ class _MyWidgetState extends State<MyWidget>
                     addset.groupDesc = value;
                   },
                 ),
-                Spacer(),
+                const Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -1552,7 +1558,7 @@ class _MyWidgetState extends State<MyWidget>
                             color: Colors.blue, width: 1), //<-- SEE HERE
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     TextButton(
@@ -1580,24 +1586,22 @@ class _MyWidgetState extends State<MyWidget>
       );
 
   void DeleteSetting() {
-    var holder_1 = [];
+    var check = [];
+    List<ListCode> holder_1 = [];
+    ListCode model = ListCode();
+    delset.listCode = [];
+    // print(check.length);
+
     for (int i = 0; i < halo.length; i++) {
       if (halo[i].isChecked == true) {
-        holder_1.add(halo[i].settingGroupCode.toString());
+        check.add(halo[i].settingGroupCode.toString());
       }
     }
-    if (holder_1.length >= 1) {
-      print(holder_1.length.toString());
-      splited = holder_1[0].toString().split(';');
-      print(splited);
-      String settingGroupCode = splited[0];
-      ListCode code = new ListCode();
-      List<ListCode> listcode = [];
-      code.code = settingGroupCode;
-      listcode.add(code);
-      delset.listCode = listcode;
-      bloc.add(Delete(delset));
-    } else if (holder_1.length == 0) {
+
+    // print(check.length);
+
+    if (check.length < 1) {
+      // print("sini : " + check.length.toString());
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
         ..showSnackBar(
@@ -1611,6 +1615,43 @@ class _MyWidgetState extends State<MyWidget>
               ),
               backgroundColor: Colors.red),
         );
+      return null;
+    } else if (check.length >= 1) {
+      for (var element in halo) {
+        if (element.isChecked == true) {
+          //model.code = element.settingGroupCode;
+          delset.listCode!.add(ListCode(code: element.settingGroupCode));
+          print(element);
+        }
+      }
+      print(delset);
+      bloc.add(Delete(delset));
     }
+
+    // for (var element in halo) {
+    //   if (element.isChecked == true) {
+    //     //model.code = element.settingGroupCode;
+    //     delset.listCode!.add(ListCode(code: element.settingGroupCode));
+    //     print(element);
+    //   }
+    // }
+    // print(delset);
+    // bloc.add(Delete(delset));
+
+    // bloc.add(Delete(delset));
+    // if (holder_1.length >= 1) {
+    //   print("total checkbnx = " + holder_1.length.toString());
+    //   splited = holder_1[0].toString().split(';');
+    //   String settingGroupCode = splited[0];
+    //   ListCode code = new ListCode();
+    //   List<ListCode> listcode = [];
+    //   code.code = settingGroupCode;
+    //   listcode.addAll(listcode);
+    //   delset.listCode = listcode;
+    //   bloc.add(Delete(delset));
+    // } else
+
+    // List<String> lisDeletReq = [];
+    // lisDeletReq.addAll(respSearch.rem);
   }
 }

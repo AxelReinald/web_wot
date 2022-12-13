@@ -476,7 +476,9 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                         height: 40,
                                         width: 120,
                                         child: OutlinedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            EditSettingDialog();
+                                          },
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -1174,223 +1176,494 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
         context: context,
         builder: (context) => AlertDialog(
           backgroundColor: Colors.white,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          title: Column(
             children: [
-              Text(
-                'Setting - Add',
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Setting - Add',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black),
+                  ),
+                  Spacer(),
+                  IconButton(
+                    onPressed: () => Navigator.pop(context, true),
+                    icon: Icon(
+                      Icons.close,
+                      color: Colors.black,
+                      size: 25,
+                    ),
+                  ),
+                ],
               ),
-              Spacer(),
-              IconButton(
-                  onPressed: () => Navigator.pop(context, true),
-                  icon: Icon(
-                    Icons.close,
-                    color: Colors.black,
-                    size: 25,
-                  ))
+              Divider(
+                thickness: 2,
+                color: Colors.blue,
+              )
             ],
           ),
           content: Container(
-            height: 400,
-            width: 400,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'Setting Group',
-                  style: TextStyle(color: Colors.black),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                TextFormField(
-                  controller: _SettingGroup,
-                  maxLength: 20,
-                  style: const TextStyle(color: Colors.black),
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(
-                        color: Colors.blue,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide:
-                          BorderSide(width: 1.0, color: Colors.grey.shade400),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Setting Code',
-                  style: TextStyle(color: Colors.black),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                TextFormField(
-                  controller: _SettingCode,
-                  maxLength: 20,
-                  style: const TextStyle(color: Colors.black),
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(
-                        color: Colors.blue,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide:
-                          BorderSide(width: 1.0, color: Colors.grey.shade400),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Description',
-                  style: TextStyle(color: Colors.black),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                TextFormField(
-                  controller: _SettingDescription,
-                  maxLines: 5, // <-- SEE HERE
-                  minLines: 1,
-                  maxLength: 150,
-                  // maxLength: 150,
-                  style: const TextStyle(color: Colors.black),
-                  decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(
-                        color: Colors.blue,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide:
-                          BorderSide(width: 1.0, color: Colors.grey.shade400),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Setting Value Type',
-                  style: TextStyle(color: Colors.black),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                TextFormField(
-                  controller: _SettingValueType,
-                  maxLength: 20,
-                  style: const TextStyle(color: Colors.black),
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(
-                        color: Colors.blue,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide:
-                          BorderSide(width: 1.0, color: Colors.grey.shade400),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Setting Value',
-                  style: TextStyle(color: Colors.black),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                TextFormField(
-                  controller: _SettingValue,
-                  maxLines: 5, // <-- SEE HERE
-                  minLines: 1,
-                  maxLength: 150,
-                  // maxLength: 150,
-                  style: const TextStyle(color: Colors.black),
-                  decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(
-                        color: Colors.blue,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide:
-                          BorderSide(width: 1.0, color: Colors.grey.shade400),
-                    ),
-                  ),
-                ),
-                Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+            height: 800,
+            width: 550,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Container(
+                height: 600,
+                width: 550,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    OutlinedButton(
-                      onPressed: () => Navigator.pop(context, true),
-                      child: Text(
-                        'Cancel',
-                        style: TextStyle(color: Colors.blue),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        primary: Colors.white,
-                        side: BorderSide(
-                            color: Colors.blue, width: 1), //<-- SEE HERE
+                    const Text(
+                      'Setting Group',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      controller: _SettingGroup,
+                      maxLength: 20,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Colors.blue,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                              width: 1.0, color: Colors.grey.shade400),
+                        ),
                       ),
                     ),
                     const SizedBox(
-                      width: 10,
+                      height: 10,
                     ),
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          // addset.groupCd = _SettingGroupCode.text;
-                          // addset.groupDesc = _SettingGroupName.text;
-                          // addset.groupName = _Description.text;
-                          //bloc.add(Add(addset));
-                        });
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        'Save',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.blue),
+                    Text(
+                      'Setting Code',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      controller: _SettingCode,
+                      maxLength: 20,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Colors.blue,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                              width: 1.0, color: Colors.grey.shade400),
+                        ),
                       ),
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Description',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      controller: _SettingDescription,
+                      maxLines: 5, // <-- SEE HERE
+                      minLines: 1,
+                      maxLength: 150,
+                      // maxLength: 150,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Colors.blue,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                              width: 1.0, color: Colors.grey.shade400),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Setting Value Type',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      controller: _SettingValueType,
+                      maxLength: 20,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Colors.blue,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                              width: 1.0, color: Colors.grey.shade400),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Setting Value',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      controller: _SettingValue,
+                      maxLines: 5, // <-- SEE HERE
+                      minLines: 1,
+                      maxLength: 150,
+                      // maxLength: 150,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Colors.blue,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                              width: 1.0, color: Colors.grey.shade400),
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        OutlinedButton(
+                          onPressed: () => Navigator.pop(context, true),
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                          style: OutlinedButton.styleFrom(
+                            primary: Colors.white,
+                            side: BorderSide(
+                                color: Colors.blue, width: 1), //<-- SEE HERE
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              // addset.groupCd = _SettingGroupCode.text;
+                              // addset.groupDesc = _SettingGroupName.text;
+                              // addset.groupName = _Description.text;
+                              //bloc.add(Add(addset));
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'Save',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.blue),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
-                )
-              ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+  Future EditSettingDialog() => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          backgroundColor: Colors.white,
+          title: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Setting - Edit',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black),
+                  ),
+                  Spacer(),
+                  IconButton(
+                    onPressed: () => Navigator.pop(context, true),
+                    icon: Icon(
+                      Icons.close,
+                      color: Colors.black,
+                      size: 25,
+                    ),
+                  ),
+                ],
+              ),
+              Divider(
+                thickness: 2,
+                color: Colors.blue,
+              )
+            ],
+          ),
+          content: Container(
+            height: 800,
+            width: 550,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Container(
+                height: 600,
+                width: 550,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Setting Group',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      controller: _SettingGroup,
+                      maxLength: 20,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Colors.blue,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                              width: 1.0, color: Colors.grey.shade400),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Setting Code',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey.shade300),
+                        child: TextFormField(
+                          readOnly: true,
+                          cursorColor: Colors.grey,
+                          controller: _SettingCode,
+                          style: const TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            fillColor: Colors.grey,
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: const BorderSide(
+                                color: Colors.blue,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                  width: 1.0, color: Colors.grey.shade400),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Description',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      controller: _SettingDescription,
+                      maxLines: 5, // <-- SEE HERE
+                      minLines: 1,
+                      maxLength: 150,
+                      // maxLength: 150,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Colors.blue,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                              width: 1.0, color: Colors.grey.shade400),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Setting Value Type',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      controller: _SettingValueType,
+                      maxLength: 20,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Colors.blue,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                              width: 1.0, color: Colors.grey.shade400),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Setting Value',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      controller: _SettingValue,
+                      maxLines: 5, // <-- SEE HERE
+                      minLines: 1,
+                      maxLength: 150,
+                      // maxLength: 150,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Colors.blue,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                              width: 1.0, color: Colors.grey.shade400),
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        OutlinedButton(
+                          onPressed: () => Navigator.pop(context, true),
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                          style: OutlinedButton.styleFrom(
+                            primary: Colors.white,
+                            side: BorderSide(
+                                color: Colors.blue, width: 1), //<-- SEE HERE
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              // addset.groupCd = _SettingGroupCode.text;
+                              // addset.groupDesc = _SettingGroupName.text;
+                              // addset.groupName = _Description.text;
+                              //bloc.add(Add(addset));
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'Save',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.blue),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
             ),
           ),
         ),

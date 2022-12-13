@@ -19,11 +19,16 @@ class Edit extends SettingGroupEvent {
 }
 
 class Delete extends SettingGroupEvent {
-  final DeleteRequestSettings delset;
-  Delete(this.delset);
+  final DeleteRequestSettings reqdel;
+  Delete(this.reqdel);
 }
 
 class InitialScreen extends SettingGroupEvent {
   final RequestSetting reqset;
   InitialScreen(this.reqset);
+}
+
+class Download extends SettingGroupEvent {
+  final DownloadRequestSettings downreq;
+  Download(this.downreq);
 }

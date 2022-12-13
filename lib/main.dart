@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web_wot/bloc/settingbloc/setting_group_bloc.dart';
 import 'package:web_wot/screen/menu.dart';
+import 'package:web_wot/screen/upload.dart';
 
 import 'bloc/settingsbloc/bloc/setting_bloc.dart';
 import 'screen/settinggroupscreen.dart';
@@ -24,25 +25,41 @@ class MyApp extends StatelessWidget {
 
       debugShowCheckedModeBanner: false,
       // home: Scaffold(
-      // home: BlocProvider<SettingGroupBloc>(
-      //   create: (context) => SettingGroupBloc(),
-      //   child: MyWidget(),
-      // ),
-      home: Scaffold(
-        body: Row(
-          children: [
-            AnimatedSize(
-              curve: Curves.easeIn,
-              // vsync: this,
-              duration: const Duration(milliseconds: 500),
-              child: LeftDrawer(
-                size: _size,
-              ),
-            ),
-          ],
-        ),
+      home: BlocProvider<SettingGroupBloc>(
+        create: (context) => SettingGroupBloc(),
+        child: MyWidget(),
       ),
+      // home: Scaffold(
+      //   appBar: AppBar(
+      //     toolbarHeight: 70,
+      //     leadingWidth: 200,
+      //     backgroundColor: Colors.white,
+      //     leading: Image(
+      //       width: 500,
+      //       height: 300,
+      //       fit: BoxFit.fill,
+      //       image: AssetImage('images/logo.jpeg'),
+      //     ),
+      //   ),
+      //   // body:
+      //   // Row(
+      //   //   children: [
+      //   //     AnimatedSize(
+      //   //       curve: Curves.easeIn,
+      //   //       // vsync: this,
+      //   //       duration: const Duration(milliseconds: 500),
+      //   //       child: LeftDrawer(
+      //   //         size: _size,
+      //   //       ),
+      //   //     ),
+      //   //   ],
+      //   // ),
+      // ),
       routes: {
+        '/settinggroup/import': (context) => BlocProvider<SettingGroupBloc>(
+              create: (context) => SettingGroupBloc(),
+              child: Import(),
+            ),
         '/settinggroup': (context) => BlocProvider<SettingGroupBloc>(
               create: (context) => SettingGroupBloc(),
               child: MyWidget(),
