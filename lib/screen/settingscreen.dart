@@ -230,196 +230,220 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                             color: Colors.white,
                             child: Container(
                               padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
-                              child: Row(
+                              child: ListView(
+                                scrollDirection: Axis.horizontal,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                  Row(
                                     children: [
-                                      const Text(
-                                        'Setting Group',
-                                        style: const TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      Container(
-                                        height: 55,
-                                        width: 250,
-                                        child: TextFormField(
-                                          controller: _Settinggroupcd,
-                                          decoration: new InputDecoration(
-                                            fillColor: Colors.white,
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              borderSide: const BorderSide(
-                                                color: Colors.blue,
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Text(
+                                            'Setting Group',
+                                            style: const TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Container(
+                                            height: 55,
+                                            width: 250,
+                                            child: TextFormField(
+                                              controller: _Settinggroupcd,
+                                              decoration: new InputDecoration(
+                                                fillColor: Colors.white,
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                  borderSide: const BorderSide(
+                                                    color: Colors.blue,
+                                                  ),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                  borderSide: BorderSide(
+                                                      width: 1.0,
+                                                      color:
+                                                          Colors.grey.shade400),
+                                                ),
                                               ),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              borderSide: BorderSide(
-                                                  width: 1.0,
-                                                  color: Colors.grey.shade400),
+                                              maxLength: 12,
+                                              style: const TextStyle(
+                                                  color: Colors.black),
+                                              onChanged: (value) {
+                                                reqset.settingGroup = value;
+                                              },
                                             ),
                                           ),
-                                          maxLength: 12,
-                                          style: const TextStyle(
-                                              color: Colors.black),
-                                          onChanged: (value) {
-                                            reqset.settingGroup = value;
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                        'Setting Code',
-                                        style: const TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500),
+                                        ],
                                       ),
                                       const SizedBox(
-                                        height: 5,
+                                        width: 20,
                                       ),
-                                      Container(
-                                        height: 55,
-                                        width: 250,
-                                        child: TextFormField(
-                                          controller: _Settinggroupname,
-                                          decoration: new InputDecoration(
-                                            // labelText: "Enter Email",
-                                            fillColor: Colors.white,
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              borderSide: const BorderSide(
-                                                color: Colors.blue,
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Text(
+                                            'Setting Code',
+                                            style: const TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Container(
+                                            height: 55,
+                                            width: 250,
+                                            child: TextFormField(
+                                              controller: _Settinggroupname,
+                                              decoration: new InputDecoration(
+                                                // labelText: "Enter Email",
+                                                fillColor: Colors.white,
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                  borderSide: const BorderSide(
+                                                    color: Colors.blue,
+                                                  ),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                  borderSide: BorderSide(
+                                                      width: 1.0,
+                                                      color:
+                                                          Colors.grey.shade400),
+                                                ),
                                               ),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              borderSide: BorderSide(
-                                                  width: 1.0,
-                                                  color: Colors.grey.shade400),
+                                              maxLength: 12,
+                                              style: const TextStyle(
+                                                  color: Colors.black),
+                                              onChanged: (value) {
+                                                reqset.settingCode = value;
+                                              },
                                             ),
                                           ),
-                                          maxLength: 12,
-                                          style: const TextStyle(
-                                              color: Colors.black),
-                                          onChanged: (value) {
-                                            reqset.settingCode = value;
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                        'Value',
-                                        style: const TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500),
+                                        ],
                                       ),
                                       const SizedBox(
-                                        height: 5,
+                                        width: 20,
                                       ),
-                                      Container(
-                                        height: 55,
-                                        width: 250,
-                                        child: TextFormField(
-                                          controller: _Value,
-                                          decoration: new InputDecoration(
-                                            // labelText: "Enter Email",
-                                            fillColor: Colors.white,
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              borderSide: const BorderSide(
-                                                color: Colors.blue,
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Text(
+                                            'Value',
+                                            style: const TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Container(
+                                            height: 55,
+                                            width: 250,
+                                            child: TextFormField(
+                                              controller: _Value,
+                                              decoration: new InputDecoration(
+                                                // labelText: "Enter Email",
+                                                fillColor: Colors.white,
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                  borderSide: const BorderSide(
+                                                    color: Colors.blue,
+                                                  ),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                  borderSide: BorderSide(
+                                                      width: 1.0,
+                                                      color:
+                                                          Colors.grey.shade400),
+                                                ),
                                               ),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              borderSide: BorderSide(
-                                                  width: 1.0,
-                                                  color: Colors.grey.shade400),
+                                              maxLength: 12,
+                                              style: const TextStyle(
+                                                  color: Colors.black),
+                                              onChanged: (value) {
+                                                reqset.value = value;
+                                              },
                                             ),
                                           ),
-                                          maxLength: 12,
-                                          style: const TextStyle(
-                                              color: Colors.black),
-                                          onChanged: (value) {
-                                            reqset.value = value;
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      SizedBox(
+                                        height: 40,
+                                        width: 120,
+                                        child: TextButton(
+                                          onPressed: () {
+                                            bloc.add(Search(reqset));
                                           },
+                                          child: Text(
+                                            'Search',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.blue),
+                                          ),
                                         ),
                                       ),
+                                      const SizedBox(
+                                        width: 15,
+                                      ),
+                                      SizedBox(
+                                        height: 40,
+                                        width: 120,
+                                        child: OutlinedButton(
+                                          onPressed: () {
+                                            _Settinggroupcd.clear();
+                                            _Settinggroupname.clear();
+                                          },
+                                          child: const Text('Clear'),
+                                          style: OutlinedButton.styleFrom(
+                                            side: const BorderSide(
+                                                width: 1.0, color: Colors.blue),
+                                          ),
+                                        ),
+                                      )
                                     ],
                                   ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  SizedBox(
-                                    height: 40,
-                                    width: 120,
-                                    child: TextButton(
-                                      onPressed: () {
-                                        bloc.add(Search(reqset));
-                                      },
-                                      child: Text(
-                                        'Search',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.blue),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  SizedBox(
-                                    height: 40,
-                                    width: 120,
-                                    child: OutlinedButton(
-                                      onPressed: () {
-                                        _Settinggroupcd.clear();
-                                        _Settinggroupname.clear();
-                                      },
-                                      child: const Text('Clear'),
-                                      style: OutlinedButton.styleFrom(
-                                        side: const BorderSide(
-                                            width: 1.0, color: Colors.blue),
-                                      ),
-                                    ),
-                                  )
                                 ],
                               ),
                             ),

@@ -13,6 +13,8 @@ class SettingGroupBloc extends Bloc<SettingGroupEvent, SettingGroupState> {
   AddRequestSettings addreq = AddRequestSettings();
   DeleteRequestSettings delreq = DeleteRequestSettings();
   DownloadRequestSettings dowreq = DownloadRequestSettings();
+  DownloadResponseSettingGroup downresp = DownloadResponseSettingGroup();
+  DownData download = DownData();
   List<ListCode> reqdel = [];
 
   SettingGroupBloc() : super(SettingInitial()) {
@@ -40,8 +42,9 @@ class SettingGroupBloc extends Bloc<SettingGroupEvent, SettingGroupState> {
             delreq = await deleteresponse(event.reqdel);
             emit(DeleteSettingSuccess(delreq));
           } else if (event is Download) {
-            dowreq = await downloadresponse(event.downreq);
-            emit(DownloadSuccess(dowreq));
+            downresp = await downloadresponse(event.downreq);
+            print(downresp);
+            emit(DownloadSuccess(downresp));
           }
         } catch (e) {
           emit(SettingError(e.toString()));
@@ -99,7 +102,7 @@ class SettingGroupBloc extends Bloc<SettingGroupEvent, SettingGroupState> {
   }
 
   downloadresponse(DownloadRequestSettings req) async {
-    DownloadRequestSettings downreq = DownloadRequestSettings();
+    DownloadResponseSettingGroup downreq = DownloadResponseSettingGroup();
 
     downreq = await api.DownloadSettingGroup(req.toJson());
 

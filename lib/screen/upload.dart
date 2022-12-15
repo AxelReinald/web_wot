@@ -145,35 +145,36 @@ class _ImportState extends State<Import> with SingleTickerProviderStateMixin {
                             color: Colors.white,
                             height: 250,
                             child: DottedBorder(
-                                radius: Radius.circular(15),
-                                strokeWidth: 1,
-                                color: Colors.grey,
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    // crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.cloud_upload_outlined,
-                                        color: Colors.black,
-                                        size: 50,
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        'Drag and drop or Browse your file here\n Allowed file formats: xlsx',
-                                        style: TextStyle(color: Colors.black),
-                                      )
-                                    ],
-                                  ),
-                                )),
+                              radius: Radius.circular(15),
+                              strokeWidth: 1,
+                              color: Colors.grey,
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  // crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: const [
+                                    Icon(
+                                      Icons.cloud_upload_outlined,
+                                      color: Colors.black,
+                                      size: 50,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      'Drag and drop or Browse your file here\n Allowed file formats: xlsx',
+                                      style: TextStyle(color: Colors.black),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
                           // const SizedBox(
                           //   height: 10,
                           // ),
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
                             height: 100,
                             width: MediaQuery.of(context).size.width,
                             color: Colors.white,
@@ -190,13 +191,13 @@ class _ImportState extends State<Import> with SingleTickerProviderStateMixin {
                                   ],
                                 ),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               ElevatedButton(
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
                                   child: Text('Cancel')),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               ElevatedButton(

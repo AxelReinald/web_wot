@@ -34,7 +34,7 @@ class DeleteSettingSuccess extends SettingGroupState {
 }
 
 class DownloadSuccess extends SettingGroupState {
-  final DownloadRequestSettings resp;
+  final DownloadResponseSettingGroup resp;
   DownloadSuccess(this.resp);
 }
 

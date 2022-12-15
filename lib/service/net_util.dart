@@ -11,6 +11,7 @@ class NetworkUtil {
     String url, {
     Map<String, dynamic>? body,
     Map<String, String>? headers,
+    Map<String, String>? param,
     encoding,
   }) async {
     String jsonBody = jsonEncode(body);

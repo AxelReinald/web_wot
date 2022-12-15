@@ -212,24 +212,76 @@ class Data {
   }
 }
 
+//Request Download
 class DownloadRequestSettings {
   String? groupCd;
   String? groupName;
-  String? extension;
+  String? extention;
 
-  DownloadRequestSettings({this.groupCd, this.groupName, this.extension});
+  DownloadRequestSettings({this.groupCd, this.groupName, this.extention});
 
   DownloadRequestSettings.fromJson(Map<String, dynamic> json) {
     groupCd = json['groupCd'];
     groupName = json['groupName'];
-    extension = json['extension'];
+    extention = json['extention'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['groupCd'] = this.groupCd;
     data['groupName'] = this.groupName;
-    data['extension'] = this.extension;
+    data['extention'] = this.extention;
+    return data;
+  }
+}
+
+//Response Download
+class DownloadResponseSettingGroup {
+  String? status;
+  String? message;
+  int? countData;
+  DownData? data;
+
+  DownloadResponseSettingGroup(
+      {this.status, this.message, this.countData, this.data});
+
+  DownloadResponseSettingGroup.fromJson(Map<String, dynamic> json) {
+    data = json['data'] != null ? new DownData.fromJson(json['data']) : null;
+    status = json['status'];
+    message = json['message'];
+    countData = json['countData'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
+    data['countData'] = this.countData;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
+class DownData {
+  String? base64Data;
+  String? fileName;
+  String? filePathName;
+
+  DownData({this.base64Data, this.fileName, this.filePathName});
+
+  DownData.fromJson(Map<String, dynamic> json) {
+    base64Data = json['base64Data'];
+    fileName = json['fileName'];
+    filePathName = json['filePathName'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['base64Data'] = this.base64Data;
+    data['fileName'] = this.fileName;
+    data['filePathName'] = this.filePathName;
     return data;
   }
 }
