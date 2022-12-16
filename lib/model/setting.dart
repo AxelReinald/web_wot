@@ -115,3 +115,36 @@ class GData {
     return data;
   }
 }
+
+class RequestSettingAdd {
+  String? settingCode;
+  String? settingDesc;
+  String? settingGroupCode;
+  String? settingValue;
+  String? settingValueType;
+
+  RequestSettingAdd(
+      {this.settingCode,
+      this.settingDesc,
+      this.settingGroupCode,
+      this.settingValue,
+      this.settingValueType});
+
+  RequestSettingAdd.fromJson(Map<String, dynamic> json) {
+    settingCode = json['settingCode'];
+    settingDesc = json['settingDesc'];
+    settingGroupCode = json['settingGroupCode'];
+    settingValue = json['settingValue'];
+    settingValueType = json['settingValueType'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['settingCode'] = this.settingCode;
+    data['settingDesc'] = this.settingDesc;
+    data['settingGroupCode'] = this.settingGroupCode;
+    data['settingValue'] = this.settingValue;
+    data['settingValueType'] = this.settingValueType;
+    return data;
+  }
+}

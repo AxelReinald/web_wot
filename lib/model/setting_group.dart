@@ -285,3 +285,57 @@ class DownData {
     return data;
   }
 }
+
+class Uploadresponse {
+  String? status;
+  String? message;
+  int? countData;
+  List<UploadData>? data;
+
+  Uploadresponse({this.status, this.message, this.countData, this.data});
+
+  Uploadresponse.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    countData = json['countData'];
+    if (json['data'] != null) {
+      data = <UploadData>[];
+      json['data'].forEach((v) {
+        data!.add(new UploadData.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
+    data['countData'] = this.countData;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class UploadData {
+  String? message;
+  int? row;
+  String? settingGroupCd;
+
+  UploadData({this.message, this.row, this.settingGroupCd});
+
+  UploadData.fromJson(Map<String, dynamic> json) {
+    message = json['message'];
+    row = json['row'];
+    settingGroupCd = json['settingGroupCd'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['message'] = this.message;
+    data['row'] = this.row;
+    data['settingGroupCd'] = this.settingGroupCd;
+    return data;
+  }
+}

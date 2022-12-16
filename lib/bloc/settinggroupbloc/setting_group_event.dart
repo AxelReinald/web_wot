@@ -32,3 +32,12 @@ class Download extends SettingGroupEvent {
   final DownloadRequestSettings downreq;
   Download(this.downreq);
 }
+
+class DownloadTemplate extends SettingGroupEvent {
+  final DownloadRequestSettings downreq;
+  DownloadTemplate(this.downreq);
+}
+
+class Upload extends SettingGroupEvent {
+  Upload(String file);
+}

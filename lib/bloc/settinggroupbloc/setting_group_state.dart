@@ -38,6 +38,16 @@ class DownloadSuccess extends SettingGroupState {
   DownloadSuccess(this.resp);
 }
 
+class DownloadTemplateSuccess extends SettingGroupState {
+  final DownloadResponseSettingGroup resp;
+  DownloadTemplateSuccess(this.resp);
+}
+
+class UploadSuccess extends SettingGroupState {
+  final Uploadresponse resp;
+  UploadSuccess(this.resp);
+}
+
 class InitSetSuccess extends SettingGroupState {
   final ResponseSetting resp;
   InitSetSuccess(this.resp);

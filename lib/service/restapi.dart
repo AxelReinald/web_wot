@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:universal_html/html.dart';
 import 'package:web_wot/helper/nav_base.dart';
 import 'package:web_wot/model/setting.dart';
 import 'package:web_wot/model/setting_group.dart';
@@ -47,7 +48,7 @@ class RestApi extends UrlApi {
         .then(
       (dynamic res) {
         // print(res);
-        if (res["errMsg"] != null) throw (res["errMsg"].toString());
+        if (res["status"] != "Success") throw (res["message"].toString());
         return ResponseSettings.fromJson(res);
       },
     );
@@ -125,6 +126,25 @@ class RestApi extends UrlApi {
       if (res["status"] != 'Success') throw res['message'];
       return DownloadResponseSettingGroup.fromJson(res);
     });
+  }
+
+  Future<dynamic> DownloadTemplate(Map<String, dynamic> header) {
+    return util
+        .post(BaseUrl + "downloadTemplateSettingGroup")
+        .then((dynamic res) {
+      if (res["status"] != 'Success') throw res['message'];
+      return DownloadResponseSettingGroup.fromJson(res);
+    });
+  }
+
+  Future<dynamic> UploadSettingGroup() {
+    return util.post(BaseUrl + "uploadSettingGroup").then(
+      (dynamic res) {
+        // print(res);
+        if (res["status"] != "Success") throw (res["message"].toString());
+        return Uploadresponse.fromJson(res); //AddRequestSettings.fromJson(res);
+      },
+    );
   }
 
   // Future<SearchSOResult> searchData(

@@ -2,7 +2,7 @@
 // import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:web_wot/bloc/settingbloc/setting_group_bloc.dart';
+import 'package:web_wot/bloc/settinggroupbloc/setting_group_bloc.dart';
 import 'package:web_wot/model/setting_group.dart';
 
 // class MyWidget extends StatelessWidget {
@@ -17,13 +17,13 @@ import 'package:web_wot/model/setting_group.dart';
 // }
 
 class EditDialog extends StatefulWidget {
-   final String settingGroupCode;
-   final String settingGroupName;
-  EditDialog({
-    Key? key,
-     required this.settingGroupCode,
-     required this.settingGroupName
-  }) : super(key: key);
+  final String settingGroupCode;
+  final String settingGroupName;
+  EditDialog(
+      {Key? key,
+      required this.settingGroupCode,
+      required this.settingGroupName})
+      : super(key: key);
 
   @override
   State<EditDialog> createState() => _EditDialogState();
@@ -52,7 +52,8 @@ class _EditDialogState extends State<EditDialog> {
           children: [
             Text(
               'Setting Group - Edit',
-              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
             ),
             Spacer(),
             IconButton(
@@ -89,7 +90,7 @@ class _EditDialogState extends State<EditDialog> {
                   // color: Colors.blue.shade100,
                   child: TextFormField(
                     //controller: _EditGroupCode,
-                    initialValue: widget.settingGroupCode ,
+                    initialValue: widget.settingGroupCode,
                     readOnly: true,
                     // maxLength: 20,
                     style: const TextStyle(color: Colors.black),
@@ -109,7 +110,7 @@ class _EditDialogState extends State<EditDialog> {
               TextFormField(
                 //controller: _EditGroupName,
                 maxLength: 20,
-                 initialValue: widget.settingGroupName,
+                initialValue: widget.settingGroupName,
                 style: const TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                   fillColor: Colors.white,
@@ -172,8 +173,8 @@ class _EditDialogState extends State<EditDialog> {
                     ),
                     style: OutlinedButton.styleFrom(
                       primary: Colors.white,
-                      side:
-                          BorderSide(color: Colors.blue, width: 1), //<-- SEE HERE
+                      side: BorderSide(
+                          color: Colors.blue, width: 1), //<-- SEE HERE
                     ),
                   ),
                   SizedBox(

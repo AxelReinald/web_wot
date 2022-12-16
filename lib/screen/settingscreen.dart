@@ -7,6 +7,8 @@ import 'package:web_wot/screen/menu.dart';
 import 'package:bloc/bloc.dart';
 import 'package:web_wot/service/restapi.dart';
 
+const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
+
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);
 
@@ -53,7 +55,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
 
   //text field controller
   TextEditingController _Settinggroupcd = TextEditingController();
-  TextEditingController _Settinggroupname = TextEditingController();
+  TextEditingController _Settingcode = TextEditingController();
   TextEditingController _Value = TextEditingController();
   TextEditingController _SettingGroup = TextEditingController();
   TextEditingController _SettingCode = TextEditingController();
@@ -66,6 +68,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     bloc = BlocProvider.of<SettingBloc>(context);
+    String dropdownValue = list.first;
     Color getColor(Set<MaterialState> states) {
       const Set<MaterialState> interactiveStates = <MaterialState>{
         MaterialState.pressed,
@@ -243,7 +246,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                         children: [
                                           const Text(
                                             'Setting Group',
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontSize: 15,
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w500),
@@ -252,40 +255,91 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                             height: 5,
                                           ),
                                           Container(
-                                            height: 55,
                                             width: 250,
-                                            child: TextFormField(
-                                              controller: _Settinggroupcd,
-                                              decoration: new InputDecoration(
-                                                fillColor: Colors.white,
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
-                                                  borderSide: const BorderSide(
-                                                    color: Colors.blue,
+                                            height: 35,
+                                            margin: EdgeInsets.only(bottom: 17),
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    width: 1,
+                                                    color:
+                                                        Colors.grey.shade400),
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child:
+                                                DropdownButtonFormField<String>(
+                                              // value: ,
+                                              decoration: const InputDecoration(
+                                                  suffixIcon: Icon(
+                                                    Icons.keyboard_arrow_down,
+                                                    color: Colors.black,
                                                   ),
+                                                  border: UnderlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          width: 5,
+                                                          color: Colors
+                                                              .greenAccent))),
+                                              isExpanded: true,
+                                              items: [
+                                                DropdownMenuItem<String>(
+                                                  child: Text('Admin'),
+                                                  value: 'one',
                                                 ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
-                                                  borderSide: BorderSide(
-                                                      width: 1.0,
-                                                      color:
-                                                          Colors.grey.shade400),
+                                                DropdownMenuItem<String>(
+                                                  child: Text('User'),
+                                                  value: 'two',
                                                 ),
-                                              ),
-                                              maxLength: 12,
-                                              style: const TextStyle(
-                                                  color: Colors.black),
-                                              onChanged: (value) {
-                                                reqset.settingGroup = value;
+                                              ],
+                                              iconSize: 5,
+                                              onChanged: (String? value) {
+                                                if (value == 'one') {
+                                                  setState(() {});
+                                                } else if (value == 'two') {
+                                                  setState(() {});
+                                                }
                                               },
                                             ),
                                           ),
+                                          // Container(
+                                          //   height: 55,
+                                          //   width: 250,
+                                          //   child:
+                                          // TextFormField(
+                                          //   controller: _Settinggroupcd,
+                                          //   decoration: InputDecoration(
+                                          //     contentPadding:
+                                          //         const EdgeInsets.symmetric(
+                                          //             vertical: 8,
+                                          //             horizontal: 8),
+                                          //     fillColor: Colors.white,
+                                          //     focusedBorder:
+                                          //         OutlineInputBorder(
+                                          //       borderRadius:
+                                          //           BorderRadius.circular(
+                                          //               10.0),
+                                          //       borderSide: const BorderSide(
+                                          //         color: Colors.blue,
+                                          //       ),
+                                          //     ),
+                                          //     enabledBorder:
+                                          //         OutlineInputBorder(
+                                          //       borderRadius:
+                                          //           BorderRadius.circular(
+                                          //               10.0),
+                                          //       borderSide: BorderSide(
+                                          //           width: 1.0,
+                                          //           color:
+                                          //               Colors.grey.shade400),
+                                          //     ),
+                                          //   ),
+                                          //   maxLength: 12,
+                                          //   style: const TextStyle(
+                                          //       color: Colors.black),
+                                          //   onChanged: (value) {
+                                          //     reqset.settingGroup = value;
+                                          //   },
+                                          // ),
+                                          // ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -311,9 +365,12 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                             height: 55,
                                             width: 250,
                                             child: TextFormField(
-                                              controller: _Settinggroupname,
-                                              decoration: new InputDecoration(
-                                                // labelText: "Enter Email",
+                                              controller: _Settingcode,
+                                              decoration: InputDecoration(
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 8,
+                                                        horizontal: 8),
                                                 fillColor: Colors.white,
                                                 focusedBorder:
                                                     OutlineInputBorder(
@@ -369,7 +426,11 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                             width: 250,
                                             child: TextFormField(
                                               controller: _Value,
-                                              decoration: new InputDecoration(
+                                              decoration: InputDecoration(
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        vertical: 8,
+                                                        horizontal: 8),
                                                 // labelText: "Enter Email",
                                                 fillColor: Colors.white,
                                                 focusedBorder:
@@ -433,7 +494,12 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                         child: OutlinedButton(
                                           onPressed: () {
                                             _Settinggroupcd.clear();
-                                            _Settinggroupname.clear();
+                                            reqset.settingCode = '';
+                                            _Settingcode.clear();
+                                            reqset.settingGroup = '';
+                                            _Value.clear();
+                                            reqset.value = '';
+                                            bloc.add(Search(reqset));
                                           },
                                           child: const Text('Clear'),
                                           style: OutlinedButton.styleFrom(
@@ -550,7 +616,10 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                         height: 40,
                                         width: 120,
                                         child: OutlinedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .pushNamed('/setting/import');
+                                          },
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -567,26 +636,63 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                       const SizedBox(
                                         width: 15,
                                       ),
-                                      SizedBox(
-                                        height: 40,
-                                        width: 120,
-                                        child: TextButton(
-                                          onPressed: () {},
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              const Text(
-                                                'Download',
-                                                style: TextStyle(
-                                                    color: Colors.white),
+                                      Card(
+                                        child: Container(
+                                          color: Colors.blue,
+                                          height: 40,
+                                          width: 120,
+                                          child: Theme(
+                                            data: Theme.of(context).copyWith(
+                                              cardColor: Colors.grey.shade600,
+                                            ),
+                                            child: PopupMenuButton(
+                                              offset: Offset(-3, 40),
+                                              tooltip: '',
+                                              child: Center(
+                                                child: Text(
+                                                  'Download',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
                                               ),
-                                            ],
-                                          ),
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.blue),
+                                              itemBuilder:
+                                                  (BuildContext context) => [
+                                                PopupMenuItem(
+                                                  onTap: () {
+                                                    setState(
+                                                      () {},
+                                                    );
+                                                  },
+                                                  value: () {},
+                                                  child: Text('CSV',
+                                                      style: TextStyle(
+                                                          color: Colors.white)),
+                                                ),
+                                                PopupMenuItem(
+                                                  onTap: () {
+                                                    setState(
+                                                      () {},
+                                                    );
+                                                  },
+                                                  value:
+                                                      () {}, //_exportToExcel,
+                                                  child: Text('XLS',
+                                                      style: TextStyle(
+                                                          color: Colors.white)),
+                                                ),
+                                                PopupMenuItem(
+                                                  onTap: () {
+                                                    setState(
+                                                      () {},
+                                                    );
+                                                  },
+                                                  value: () {},
+                                                  child: Text('XLSX',
+                                                      style: TextStyle(
+                                                          color: Colors.white)),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -655,7 +761,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight
-                                                                    .w500),
+                                                                    .bold),
                                                       ),
                                                     ),
                                                   ),
@@ -679,7 +785,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight
-                                                                    .w500),
+                                                                    .bold),
                                                       ),
                                                     ),
                                                   ),
@@ -703,7 +809,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight
-                                                                    .w500),
+                                                                    .bold),
                                                       ),
                                                     ),
                                                   ),
@@ -727,7 +833,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight
-                                                                    .w500),
+                                                                    .bold),
                                                       ),
                                                     ),
                                                   ),
@@ -751,7 +857,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight
-                                                                    .w500),
+                                                                    .bold),
                                                       ),
                                                     ),
                                                   ),
@@ -775,7 +881,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight
-                                                                    .w500),
+                                                                    .bold),
                                                       ),
                                                     ),
                                                   ),
@@ -799,7 +905,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight
-                                                                    .w500),
+                                                                    .bold),
                                                       ),
                                                     ),
                                                   ),
@@ -823,7 +929,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight
-                                                                    .w500),
+                                                                    .bold),
                                                       ),
                                                     ),
                                                   ),
@@ -847,7 +953,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight
-                                                                    .w500),
+                                                                    .bold),
                                                       ),
                                                     ),
                                                   ),
@@ -924,7 +1030,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                                                         15),
                                                                 child: Text(
                                                                   ex[index]
-                                                                      .settingGroupName
+                                                                      .settingGroupCode
                                                                       .toString(),
                                                                   style: TextStyle(
                                                                       color: Colors
@@ -949,7 +1055,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                                                                         15),
                                                                 child: Text(
                                                                   ex[index]
-                                                                      .settingGroupCode
+                                                                      .settingCode
                                                                       .toString(),
                                                                   style: TextStyle(
                                                                       color: Colors

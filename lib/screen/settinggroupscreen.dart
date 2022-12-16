@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:web_wot/bloc/settingbloc/setting_group_bloc.dart';
+import 'package:web_wot/bloc/settinggroupbloc/setting_group_bloc.dart';
 import 'package:web_wot/helper/custom_scroll.dart';
 import 'package:web_wot/helper/nav_base.dart';
 import 'package:web_wot/model/setting_group.dart';
@@ -186,6 +186,28 @@ class _MyWidgetState extends State<MyWidget>
             writeFileWeb(
                 download.base64Data.toString(), download.fileName.toString());
           });
+        }
+        if (state is DownloadTemplateSuccess) {
+          setState(() {
+            download = state.resp.data!;
+            writeFileWeb(
+                download.base64Data.toString(), download.fileName.toString());
+          });
+        }
+        if (state is UploadSuccess) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              const SnackBar(
+                  duration: Duration(seconds: 5),
+                  content: Text(
+                    'Upload Berhasil',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  backgroundColor: Colors.green),
+            );
         }
       },
       child: Scaffold(

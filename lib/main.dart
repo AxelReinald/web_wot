@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:web_wot/bloc/settingbloc/setting_group_bloc.dart';
+import 'package:web_wot/bloc/settinggroupbloc/setting_group_bloc.dart';
 import 'package:web_wot/screen/menu.dart';
 import 'package:web_wot/screen/upload.dart';
+import 'package:web_wot/screen/uploadsetting.dart';
 
 import 'bloc/settingsbloc/bloc/setting_bloc.dart';
 import 'screen/settinggroupscreen.dart';
@@ -68,6 +69,10 @@ class MyApp extends StatelessWidget {
               create: (context) => SettingBloc(),
               child: Setting(),
             ),
+        '/setting/import': (context) => BlocProvider<SettingBloc>(
+              create: (context) => SettingBloc(),
+              child: ImportSetting(),
+            )
       },
     );
   }
