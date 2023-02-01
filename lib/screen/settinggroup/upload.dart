@@ -1,25 +1,30 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+// import 'package:flutter/src/foundation/key.dart';
+// import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:http/http.dart' as http;
 import 'package:web_wot/bloc/settinggroupbloc/setting_group_bloc.dart';
+// import 'package:web_wot/bloc/settingsbloc/bloc/setting_bloc.dart';
 import 'package:web_wot/helper/nav_base.dart';
-import 'package:web_wot/helper/upload_set.dart';
+// import 'package:web_wot/helper/upload_set.dart';
 import 'package:web_wot/model/setting_group.dart';
+import 'package:web_wot/model/uploadmodel.dart';
 import 'package:web_wot/screen/menu.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:http_parser/http_parser.dart';
+// import 'package:open_file/open_file.dart';
+// import 'package:path_provider/path_provider.dart';
+// import 'package:http_parser/http_parser.dart';
+import 'package:flutter_dropzone/flutter_dropzone.dart';
 
 class Import extends StatefulWidget {
-  const Import({Key? key}) : super(key: key);
+  final ValueChanged<File_Data_Model> onDroppedFile;
+  const Import({Key? key, required this.onDroppedFile}) : super(key: key);
 
   @override
   State<Import> createState() => _ImportState();
@@ -27,15 +32,21 @@ class Import extends StatefulWidget {
 
 class _ImportState extends State<Import> with SingleTickerProviderStateMixin {
   double _size = 250.0;
+  PlatformFile? objFile = null;
   late SettingGroupBloc bloc;
+  late File filePickerVal;
+  String message1 = '';
+  bool highlighted1 = false;
+  bool isDisabled = false;
+  // Uint8List fileBytes;
   DownData download = DownData();
   DownloadRequestSettings dowreq = new DownloadRequestSettings();
   bool _large = true;
   Uploadresponse response = Uploadresponse();
   late File selectedfile;
+  var picked;
   // Response response;
   late String progress;
-  var cetak;
   void _updateSize() {
     setState(() {
       _size = _large ? 250.0 : 0.0;
@@ -43,20 +54,115 @@ class _ImportState extends State<Import> with SingleTickerProviderStateMixin {
     });
   }
 
-  void opendir() async {
-    FilePickerResult? result = await FilePicker.platform
-        .pickFiles(type: FileType.custom, allowedExtensions: ['xlsx']);
-    if (result != null && result.files.isNotEmpty) {
-      // File file = File(result.files.single.path!);
-      final fileBytes = result.files.first.bytes.toString();
-      final fileName = result.files.first.name;
-      // bloc.add(Upload(fileBytes));
-      setState(() {});
-    } else {
-      return;
-      // User canceled the picker
+  late List<File> newDoc = [];
+
+  void chooseFileUsingFilePicker() async {
+    //-----pick file by file picker,
+
+    var result = await FilePicker.platform.pickFiles(
+      withReadStream:
+          true, // this will return PlatformFile object with read stream
+    );
+    if (result != null) {
+      setState(() {
+        objFile = result.files.single;
+      });
     }
   }
+
+  Future dropzoneresult(ev) async {
+    setState(() {
+      message1 = '${ev.name} dropped';
+    });
+    final request = http.MultipartRequest(
+      "POST",
+      Uri.parse(
+          "http://192.168.0.130:9013/temacs/api/temacs/main/v1/uploadSettingGroup"),
+    );
+    final byte = await controller.getFileData(ev);
+    final name = ev.name;
+    final mime = await controller.getFileMIME(ev);
+    final size = await controller.getFileSize(ev);
+    final url = await controller.createFileUrl(ev);
+    // print(bytes.sublist(0, 20));
+    final droppedFile = File_Data_Model(
+        name: name, mime: mime, bytes: byte, url: url, sizes: size);
+
+    bloc.add(UploadFile(droppedFile));
+  }
+
+  void uploadSelectedFile() async {
+    //---Create http package multipart request object
+    // var stream = new http.ByteStream(objFile!.());
+    // stream.cast();
+    final request = http.MultipartRequest(
+      "POST",
+      Uri.parse(
+          "http://192.168.0.130:9013/temacs/api/temacs/main/v1/uploadSettingGroup"),
+    );
+    //-----add other fields if needed
+    // request.fields["id"] = "abc";
+    // print(objFile!.name);
+    //-----add selected file with request
+    request.files.add(http.MultipartFile(
+        "file", objFile!.readStream!, objFile!.size,
+        filename: objFile!.name));
+    print(objFile!.readStream!);
+    //-------Send request
+    var resp = await request.send();
+    //------Read response
+    String result = await resp.stream.bytesToString();
+
+    if (result.contains("Success")) {
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          const SnackBar(
+              duration: Duration(seconds: 5),
+              content: Text(
+                'Upload Berhasil',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              backgroundColor: Colors.blue),
+        );
+    } else if (result.contains("error")) {
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          const SnackBar(
+              duration: Duration(seconds: 5),
+              content: Text(
+                'Upload Gagal',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              backgroundColor: Colors.red),
+        );
+    }
+    //-------Your response
+    print(result);
+  }
+
+  // void opendir() async {
+  //   FilePickerResult? result = await FilePicker.platform
+  //       .pickFiles(type: FileType.custom, allowedExtensions: ['xlsx']);
+  //   if (result != null && result.files.isNotEmpty) {
+  //     // File file = File(result.files.single.path!);
+  //     // final fileBytes = result.files.first.bytes.toString();
+  //     // final fileName = result.files.first.name;
+  //     fileBytes = result.files.first.bytes;
+  //     String fileName = result.files.first.name;
+  //     // filePickerVal = File(result.files.single.path.toString());
+  //     // bloc.add(Upload(fileBytes));
+  //     setState(() {});
+  //   } else {
+  //     return;
+  //     // User canceled the picker
+  //   }
+  // }
 
   late DropzoneViewController controller;
 
@@ -65,7 +171,6 @@ class _ImportState extends State<Import> with SingleTickerProviderStateMixin {
     bloc = BlocProvider.of<SettingGroupBloc>(context);
     return BlocListener<SettingGroupBloc, SettingGroupState>(
       listener: (context, state) {
-        // TODO: implement listener
         if (state is SettingLoading) {
           const Center(
             child: CircularProgressIndicator(),
@@ -92,6 +197,22 @@ class _ImportState extends State<Import> with SingleTickerProviderStateMixin {
                   ),
                   backgroundColor: Colors.green),
             );
+        }
+        if (state is UploadFileSuccess) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              const SnackBar(
+                  duration: Duration(seconds: 5),
+                  content: Text(
+                    'Upload Berhasil',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  backgroundColor: Colors.green),
+            );
+          // bloc.add(Search(reqset));
         }
       },
       child: Scaffold(
@@ -193,7 +314,7 @@ class _ImportState extends State<Import> with SingleTickerProviderStateMixin {
                       child: Row(
                         children: const [
                           Text(
-                            'Home / Admin / SettingGroup / Import',
+                            'Home / Master / SettingGroup / Import',
                             style: TextStyle(color: Colors.black),
                           ),
                         ],
@@ -217,9 +338,7 @@ class _ImportState extends State<Import> with SingleTickerProviderStateMixin {
                               child: Stack(
                                 children: [
                                   DropzoneView(
-                                    onDrop: (value) {
-                                      print('masuk file');
-                                    },
+                                    onDrop: (dynamic ev) => dropzoneresult(ev),
                                     onCreated: (dropcontroller) =>
                                         this.controller = dropcontroller,
                                   ),
@@ -249,26 +368,42 @@ class _ImportState extends State<Import> with SingleTickerProviderStateMixin {
                                                 style: TextStyle(
                                                     color: Colors.black)),
                                             TextSpan(
-                                              recognizer: TapGestureRecognizer()
-                                                ..onTap = () {
-                                                  opendir();
-                                                  //print('masuk browse');
-                                                },
-                                              text: 'Browse ',
-                                              style: TextStyle(
-                                                color: Colors.blue,
-                                              ),
-                                            ),
+                                                text: 'Browse ',
+                                                style: TextStyle(
+                                                  color: Colors.blue,
+                                                ),
+                                                recognizer: TapGestureRecognizer()
+                                                  ..onTap = () =>
+                                                      chooseFileUsingFilePicker()),
+                                            // () async {
+                                            //   picked = await FilePicker
+                                            //       .platform
+                                            //       .pickFiles();
+
+                                            //  },
+
+                                            // ),
                                             TextSpan(
                                                 text: 'your file here\n\n',
                                                 style: TextStyle(
                                                     color: Colors.black)),
                                             TextSpan(
                                               text:
-                                                  'Allowed file formats: xlsx',
+                                                  'Allowed file formats: xlsx\n\n',
                                               style: TextStyle(
                                                   color: Colors.black),
                                             ),
+                                            if (message1 != null)
+                                              TextSpan(text: message1),
+
+                                            if (objFile != null)
+                                              TextSpan(
+                                                  text:
+                                                      "File yang dipilih : ${objFile!.name}"),
+                                            if (objFile != null)
+                                              TextSpan(
+                                                  text:
+                                                      "  ${objFile!.size} bytes"),
                                           ]))
                                         ],
                                       ),
@@ -292,7 +427,7 @@ class _ImportState extends State<Import> with SingleTickerProviderStateMixin {
                                     bloc.add(DownloadTemplate(dowreq));
                                   },
                                   child: Row(
-                                    children: const [
+                                    children: [
                                       Icon(Icons.download),
                                       SizedBox(
                                         width: 20,
@@ -311,11 +446,15 @@ class _ImportState extends State<Import> with SingleTickerProviderStateMixin {
                                   width: 10,
                                 ),
                                 ElevatedButton(
-                                    onPressed: () {
-                                      // bloc.add(Upload());
-                                      //Uploadrequest();
-                                    },
-                                    child: Text('Submit')),
+                                  onPressed: () => uploadSelectedFile(),
+
+                                  // () {
+                                  //   // _validateInputs();
+                                  //   // bloc.add(Upload());
+                                  //   // Uploadrequest();
+                                  // },
+                                  child: Text('Submit'),
+                                ),
                               ]),
                             )
                           ]),

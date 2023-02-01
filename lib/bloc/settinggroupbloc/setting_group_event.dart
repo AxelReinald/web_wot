@@ -28,6 +28,11 @@ class InitialScreen extends SettingGroupEvent {
   InitialScreen(this.reqset);
 }
 
+class UploadFile extends SettingGroupEvent {
+  final File_Data_Model req;
+  UploadFile(this.req);
+}
+
 class Download extends SettingGroupEvent {
   final DownloadRequestSettings downreq;
   Download(this.downreq);

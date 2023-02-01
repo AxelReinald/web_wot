@@ -1,9 +1,10 @@
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:file_picker/src/file_picker_result.dart';
+// import 'package:file_picker/src/file_picker_result.dart';
 import 'package:meta/meta.dart';
 import 'package:web_wot/model/setting_group.dart';
+import 'package:web_wot/model/uploadmodel.dart';
 import 'package:web_wot/service/restapi.dart';
 
 part 'setting_group_event.dart';
@@ -54,6 +55,9 @@ class SettingGroupBloc extends Bloc<SettingGroupEvent, SettingGroupState> {
           } else if (event is Upload) {
             uploadresp = await uploadresponse();
             emit(UploadSuccess(uploadresp));
+          } else if (event is UploadFile) {
+            resp = await uploadfileresponse(event.req);
+            emit(UploadFileSuccess());
           }
         } catch (e) {
           emit(SettingError(e.toString()));
@@ -127,6 +131,12 @@ class SettingGroupBloc extends Bloc<SettingGroupEvent, SettingGroupState> {
   uploadresponse() async {
     Uploadresponse upload = Uploadresponse();
     upload = await api.UploadSettingGroup();
+    return upload;
+  }
+
+  uploadfileresponse(File_Data_Model req) async {
+    Uploadresponse upload = Uploadresponse();
+    upload = await api.UploadFileSettingGroup(req);
     return upload;
   }
 }

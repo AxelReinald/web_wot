@@ -1,4 +1,4 @@
-import 'package:flutter/gestures.dart';
+// import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class LeftDrawer extends StatefulWidget {
@@ -104,64 +104,83 @@ class _LeftDrawerState extends State<LeftDrawer> with TickerProviderStateMixin {
                         ]),
                       ),
                     ),
-                    Container(
-                      height: _height,
-                      width: _width,
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.keyboard_arrow_right,
-                                color: Colors.black),
-                            const SizedBox(width: 10),
-                            const Text(
-                              'Menu',
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          ],
+                    InkWell(
+                      child: Ink(
+                        height: _height,
+                        width: _width,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Colors.black,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'Menu',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/menuscreen');
+                      },
                     ),
-                    Container(
-                      height: _height,
-                      width: _width,
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.keyboard_arrow_right,
-                              color: Colors.black,
-                            ),
-                            const SizedBox(width: 10),
-                            const Text(
-                              'Role',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          ],
+                    InkWell(
+                      child: Ink(
+                        height: _height,
+                        width: _width,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Colors.black,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'Role',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/role');
+                      },
                     ),
-                    Container(
-                      height: _height,
-                      width: _width,
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.keyboard_arrow_right,
-                                color: Colors.black),
-                            const SizedBox(width: 10),
-                            const Text(
-                              'User',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          ],
+                    InkWell(
+                      child: Ink(
+                        height: _height,
+                        width: _width,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Colors.black,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'User',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/user');
+                      },
                     ),
                   ],
                 ),
@@ -275,24 +294,161 @@ class _LeftDrawerState extends State<LeftDrawer> with TickerProviderStateMixin {
                         Navigator.of(context).pushNamed('/setting');
                       },
                     ),
-                    Container(
-                      height: _height2,
-                      width: _width2,
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        child: Row(
-                          children: const [
-                            Icon(Icons.keyboard_arrow_right,
-                                color: Colors.black),
-                            SizedBox(width: 10),
-                            Text(
-                              'Parameter',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          ],
+                    InkWell(
+                      child: Ink(
+                        height: _height2,
+                        width: _width2,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Colors.black,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'Parameter',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/parameter');
+                      },
+                    ),
+                    InkWell(
+                      child: Ink(
+                        height: _height2,
+                        width: _width2,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Colors.black,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'Province',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/province');
+                      },
+                    ),
+                    InkWell(
+                      child: Ink(
+                        height: _height2,
+                        width: _width2,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Colors.black,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'City',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/city');
+                      },
+                    ),
+                    InkWell(
+                      child: Ink(
+                        height: _height2,
+                        width: _width2,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Colors.black,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'Company',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/company');
+                      },
+                    ),
+                    InkWell(
+                      child: Ink(
+                        height: _height2,
+                        width: _width2,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Colors.black,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'Supported Object',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/supportedobject');
+                      },
+                    ),
+                    InkWell(
+                      child: Ink(
+                        height: _height2,
+                        width: _width2,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Colors.black,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'Supported PIC',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/supportpic');
+                      },
                     ),
                   ],
                 ),

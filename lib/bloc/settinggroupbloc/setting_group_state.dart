@@ -17,6 +17,10 @@ class SettingSuccess extends SettingGroupState {
   SettingSuccess(this.resp);
 }
 
+class UploadFileSuccess extends SettingGroupState {
+  UploadFileSuccess();
+}
+
 class AddSettingSuccess extends SettingGroupState {
   final AddRequestSettings resp;
   AddSettingSuccess(this.resp);

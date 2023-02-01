@@ -95,7 +95,8 @@ class RData {
       this.updatedTime,
       this.settingGroupCode,
       this.settingGroupName,
-      this.settingGroupDesc});
+      this.settingGroupDesc,
+      this.isChecked});
 
   RData.fromJson(Map<String, dynamic> json) {
     isChecked = false;
@@ -188,9 +189,9 @@ class DeleteResponseSetting {
 }
 
 class Data {
-  Null? status;
+  Null status;
   String? message;
-  Null? countData;
+  Null countData;
   List<String>? data;
 
   Data({this.status, this.message, this.countData, this.data});
@@ -336,6 +337,85 @@ class UploadData {
     data['message'] = this.message;
     data['row'] = this.row;
     data['settingGroupCd'] = this.settingGroupCd;
+    return data;
+  }
+}
+
+//model api postman
+
+class SearchPostmanResponse {
+  String? status;
+  String? message;
+  int? countData;
+  List<PostData>? data;
+
+  SearchPostmanResponse({this.status, this.message, this.countData, this.data});
+
+  SearchPostmanResponse.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    countData = json['countData'];
+    if (json['data'] != null) {
+      data = <PostData>[];
+      json['data'].forEach((v) {
+        data!.add(new PostData.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
+    data['countData'] = this.countData;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class PostData {
+  String? createdBy;
+  String? createdTime;
+  String? updatedBy;
+  String? updatedTime;
+  String? settingGroupCd;
+  String? settingGroupName;
+  String? settingGroupDesc;
+  String? recordFlag;
+
+  PostData(
+      {this.createdBy,
+      this.createdTime,
+      this.updatedBy,
+      this.updatedTime,
+      this.settingGroupCd,
+      this.settingGroupName,
+      this.settingGroupDesc,
+      this.recordFlag});
+
+  PostData.fromJson(Map<String, dynamic> json) {
+    createdBy = json['createdBy'];
+    createdTime = json['createdTime'];
+    updatedBy = json['updatedBy'];
+    updatedTime = json['updatedTime'];
+    settingGroupCd = json['settingGroupCd'];
+    settingGroupName = json['settingGroupName'];
+    settingGroupDesc = json['settingGroupDesc'];
+    recordFlag = json['recordFlag'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['createdBy'] = this.createdBy;
+    data['createdTime'] = this.createdTime;
+    data['updatedBy'] = this.updatedBy;
+    data['updatedTime'] = this.updatedTime;
+    data['settingGroupCd'] = this.settingGroupCd;
+    data['settingGroupName'] = this.settingGroupName;
+    data['settingGroupDesc'] = this.settingGroupDesc;
+    data['recordFlag'] = this.recordFlag;
     return data;
   }
 }

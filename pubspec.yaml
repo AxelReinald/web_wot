@@ -39,11 +39,13 @@ dependencies:
   dotted_border: ^2.0.0+3
   universal_html: ^2.0.8
   open_file: ^3.2.1
-  path_provider: ^2.0.11
   file_picker: ^4.6.1
   flutter_dropzone: ^3.0.5
-  path: ^1.8.1
   http_parser: ^4.0.2
+  desktop_drop: ^0.4.0
+  flutter_typeahead: ^4.1.1
+  image_picker: ^0.8.6+1
+  fluttertoast: ^8.1.2
 
 dev_dependencies:
   flutter_test:
@@ -54,7 +56,6 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
